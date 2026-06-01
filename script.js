@@ -1,177 +1,137 @@
 // Navbar scroll effect
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 20);
-});
+  navbar.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
 
 // Mobile menu
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', open);
 });
 mobileMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => mobileMenu.classList.remove('open'));
 });
 
-// Pricing toggle
-const pricingToggle = document.getElementById('pricingToggle');
-const lblMonthly = document.getElementById('lblMonthly');
-const lblAnnual  = document.getElementById('lblAnnual');
+// ── CAROUSEL ──────────────────────────────────────────────────────────────────
+const track    = document.getElementById('carTrack');
+const viewport = document.getElementById('carViewport');
+const prevBtn  = document.getElementById('prevBtn');
+const nextBtn  = document.getElementById('nextBtn');
+const dotsWrap = document.getElementById('carDots');
+const cards    = Array.from(track.querySelectorAll('.testi-card'));
 
-pricingToggle.addEventListener('change', () => {
-  const isAnnual = pricingToggle.checked;
-  document.querySelectorAll('.monthly-price').forEach(el => el.style.display = isAnnual ? 'none' : '');
-  document.querySelectorAll('.annual-price').forEach(el => el.style.display = isAnnual ? '' : 'none');
-  lblMonthly.classList.toggle('active', !isAnnual);
-  lblAnnual.classList.toggle('active', isAnnual);
-});
+let idx = 0;
+let autoTimer = null;
 
-// FAQ accordion
-document.querySelectorAll('.faq-question').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item   = btn.closest('.faq-item');
-    const answer = item.querySelector('.faq-answer');
-    const isOpen = item.classList.contains('open');
-
-    document.querySelectorAll('.faq-item.open').forEach(openItem => {
-      openItem.classList.remove('open');
-      openItem.querySelector('.faq-answer').style.maxHeight = null;
-    });
-
-    if (!isOpen) {
-      item.classList.add('open');
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-    }
-  });
-});
-
-// Carousel
-const track      = document.getElementById('carouselTrack');
-const viewport   = document.getElementById('carouselViewport');
-const prevBtn    = document.getElementById('prevBtn');
-const nextBtn    = document.getElementById('nextBtn');
-const dotsWrap   = document.getElementById('carouselDots');
-const cards      = track.querySelectorAll('.testimonial-card');
-
-let currentIndex = 0;
-let autoTimer;
-
-function getVisibleCount() {
-  const vw = window.innerWidth;
-  if (vw <= 480)  return 1;
-  if (vw <= 1024) return 2;
+function visibleCount() {
+  const w = window.innerWidth;
+  if (w <= 480)  return 1;
+  if (w <= 1024) return 2;
   return 3;
 }
 
-function getMaxIndex() {
-  return Math.max(0, cards.length - getVisibleCount());
+function maxIdx() { return Math.max(0, cards.length - visibleCount()); }
+
+function cardWidth() {
+  if (!cards[0]) return 0;
+  const gap = 20;
+  return cards[0].offsetWidth + gap;
 }
 
 function buildDots() {
   dotsWrap.innerHTML = '';
-  const count = getMaxIndex() + 1;
-  for (let i = 0; i < count; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'carousel-dot' + (i === currentIndex ? ' active' : '');
-    dot.setAttribute('aria-label', `Slide ${i + 1}`);
-    dot.addEventListener('click', () => goTo(i));
-    dotsWrap.appendChild(dot);
+  for (let i = 0; i <= maxIdx(); i++) {
+    const btn = document.createElement('button');
+    btn.className = 'car-dot' + (i === idx ? ' active' : '');
+    btn.setAttribute('aria-label', `Slide ${i + 1}`);
+    btn.addEventListener('click', () => { goTo(i); resetAuto(); });
+    dotsWrap.appendChild(btn);
   }
 }
 
-function updateDots() {
-  dotsWrap.querySelectorAll('.carousel-dot').forEach((dot, i) => {
-    dot.classList.toggle('active', i === currentIndex);
+function syncDots() {
+  dotsWrap.querySelectorAll('.car-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
   });
 }
 
-function getCardWidth() {
-  if (!cards[0]) return 0;
-  const gap = 24;
-  return cards[0].offsetWidth + gap;
+function goTo(i) {
+  const max = maxIdx();
+  idx = Math.max(0, Math.min(i, max));
+  track.style.transform = `translateX(-${idx * cardWidth()}px)`;
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx >= max;
+  syncDots();
 }
 
-function goTo(index) {
-  const max = getMaxIndex();
-  currentIndex = Math.max(0, Math.min(index, max));
-  track.style.transform = `translateX(-${currentIndex * getCardWidth()}px)`;
-  prevBtn.disabled = currentIndex === 0;
-  nextBtn.disabled = currentIndex >= max;
-  updateDots();
-}
-
-function startAuto() {
-  stopAuto();
-  autoTimer = setInterval(() => {
-    const max = getMaxIndex();
-    goTo(currentIndex >= max ? 0 : currentIndex + 1);
-  }, 5000);
-}
-
-function stopAuto() {
+function resetAuto() {
   clearInterval(autoTimer);
+  autoTimer = setInterval(() => goTo(idx >= maxIdx() ? 0 : idx + 1), 5500);
 }
 
-prevBtn.addEventListener('click', () => { goTo(currentIndex - 1); stopAuto(); startAuto(); });
-nextBtn.addEventListener('click', () => { goTo(currentIndex + 1); stopAuto(); startAuto(); });
+prevBtn.addEventListener('click', () => { goTo(idx - 1); resetAuto(); });
+nextBtn.addEventListener('click', () => { goTo(idx + 1); resetAuto(); });
 
-// Touch/swipe support
-let touchStartX = 0;
-viewport.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+// Touch swipe
+let tx = 0;
+viewport.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
 viewport.addEventListener('touchend', e => {
-  const diff = touchStartX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) > 40) {
-    goTo(diff > 0 ? currentIndex + 1 : currentIndex - 1);
-    stopAuto(); startAuto();
-  }
+  const diff = tx - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) { goTo(diff > 0 ? idx + 1 : idx - 1); resetAuto(); }
 });
 
 // Pause on hover
-viewport.addEventListener('mouseenter', stopAuto);
-viewport.addEventListener('mouseleave', startAuto);
+viewport.addEventListener('mouseenter', () => clearInterval(autoTimer));
+viewport.addEventListener('mouseleave', resetAuto);
 
-// Init
-function init() {
-  buildDots();
-  goTo(currentIndex);
-  startAuto();
-}
-
+// Re-init on resize
+let resizeTimer;
 window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    buildDots();
+    goTo(Math.min(idx, maxIdx()));
+  }, 120);
+});
+
+function initCarousel() {
   buildDots();
-  goTo(Math.min(currentIndex, getMaxIndex()));
-});
+  goTo(0);
+  resetAuto();
+}
+initCarousel();
 
-init();
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', e => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const offset = 80;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  });
-});
-
-// Intersection observer for entrance animations
-const observer = new IntersectionObserver(entries => {
+// ── ENTRANCE ANIMATIONS ────────────────────────────────────────────────────────
+const fadeEls = document.querySelectorAll(
+  '.level-card, .lesson-card, .plano-card, .recurso-card, .official-link-card'
+);
+const io = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.style.opacity = '1';
       entry.target.style.transform = 'translateY(0)';
-      observer.unobserve(entry.target);
+      io.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
 
-document.querySelectorAll('.method-card, .course-card, .pricing-card, .faq-item').forEach(el => {
+fadeEls.forEach((el, i) => {
   el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = 'opacity .5s ease, transform .5s ease';
-  observer.observe(el);
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = `opacity .4s ease ${(i % 4) * 60}ms, transform .4s ease ${(i % 4) * 60}ms`;
+  io.observe(el);
+});
+
+// ── SMOOTH SCROLL ─────────────────────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      window.scrollTo({ top: target.getBoundingClientRect().top + scrollY - 72, behavior: 'smooth' });
+    }
+  });
 });

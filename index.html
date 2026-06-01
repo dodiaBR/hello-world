@@ -3,323 +3,335 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Francês Direto — Aprenda francês do zero ao avançado com professores nativos. Método comprovado, aulas ao vivo e suporte completo." />
-  <title>Francês Direto — Aprenda Francês de Verdade</title>
+  <meta name="description" content="Francês Direto — Francês prático para brasileiros que querem falar de verdade. Preparação DELF/DALF A1 ao C2." />
+  <title>Francês Direto — Francês prático para brasileiros</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <!-- NAVBAR -->
   <header class="navbar" id="navbar">
-    <div class="container nav-inner">
-      <a href="#" class="logo">
-        <span class="logo-fr">FR</span>
-        <span class="logo-text">Francês <strong>Direto</strong></span>
-      </a>
-      <nav class="nav-links">
-        <a href="#metodo">Método</a>
-        <a href="#cursos">Cursos</a>
-        <a href="#depoimentos">Depoimentos</a>
-        <a href="#precos">Preços</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-      <a href="#precos" class="btn btn-primary nav-cta">Começar Agora</a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+    <div class="nav-top">
+      <div class="container nav-inner">
+        <a href="/" class="logo">
+          <span class="logo-name">Francês</span>
+          <span class="logo-accent">Direto</span>
+        </a>
+        <nav class="nav-links desktop-only">
+          <a href="#aulas">Aulas</a>
+          <a href="#recursos">Recursos</a>
+          <a href="#academie">Académie</a>
+          <span class="nav-sep">|</span>
+          <a href="#delf">DELF/DALF</a>
+          <a href="#tcf">B2/TCF</a>
+          <a href="#planos">Planos</a>
+          <a href="#pierre">Pierre</a>
+          <span class="nav-sep">|</span>
+          <a href="#contato">Contato</a>
+        </nav>
+        <div class="nav-actions desktop-only">
+          <a href="#entrar" class="btn btn-ghost-dark">Entrar</a>
+          <a href="#comecar" class="btn btn-dark">Começar grátis</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="#metodo" class="mobile-link">Método</a>
-      <a href="#cursos" class="mobile-link">Cursos</a>
-      <a href="#depoimentos" class="mobile-link">Depoimentos</a>
-      <a href="#precos" class="mobile-link">Preços</a>
-      <a href="#faq" class="mobile-link">FAQ</a>
-      <a href="#precos" class="btn btn-primary">Começar Agora</a>
+      <a href="#aulas">Aulas</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#delf">DELF/DALF</a>
+      <a href="#planos">Planos</a>
+      <a href="#pierre">Pierre</a>
+      <a href="#contato">Contato</a>
+      <div class="mobile-actions">
+        <a href="#entrar" class="btn btn-ghost-dark">Entrar</a>
+        <a href="#comecar" class="btn btn-dark">Começar grátis</a>
+      </div>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg-pattern"></div>
+  <section class="hero" id="comecar">
     <div class="container hero-inner">
-      <div class="hero-badge">
-        <span class="flag">🇫🇷</span> +8.000 alunos formados
+      <div class="hero-body">
+        <span class="eyebrow">Método freemium</span>
+        <h1>Preparação séria,<br /><em>elegante</em> e orientada<br />para aprovação.</h1>
+        <p class="hero-sub">
+          O aluno entende o exame, treina com método e usa os recursos oficiais de France Éducation international no momento certo. O Francês Direto organiza o caminho, corrige a produção e prepara a fala com Pierre.
+        </p>
+        <div class="hero-actions">
+          <a href="#aulas" class="btn btn-dark btn-lg">Começar pelo B2</a>
+          <a href="#tcf" class="btn btn-outline-dark btn-lg">Ver TCF</a>
+        </div>
+        <div class="hero-trust">
+          <span>🇧🇷 Feito para brasileiros</span>
+          <span>·</span>
+          <span>10 aulas gratuitas</span>
+          <span>·</span>
+          <span>Sem cartão de crédito</span>
+        </div>
       </div>
-      <h1 class="hero-title">
-        Fale francês com<br />
-        <span class="highlight">confiança e fluência</span>
-      </h1>
-      <p class="hero-subtitle">
-        Do zero ao avançado com o método mais eficaz do Brasil. Aulas ao vivo, professores nativos e uma comunidade apaixonada pelo idioma.
-      </p>
-      <div class="hero-actions">
-        <a href="#precos" class="btn btn-primary btn-lg">Quero Aprender Francês</a>
-        <a href="#metodo" class="btn btn-ghost btn-lg">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-          Ver como funciona
+      <div class="hero-card-wrap">
+        <div class="hero-feature-card">
+          <span class="card-eyebrow">Prioridade estratégica</span>
+          <h2>B2 primeiro. C1 quando o projeto exigir.</h2>
+          <p>Para universidade na França, o B2 é frequentemente o alvo mínimo útil. O C1 vira diferencial para cursos seletivos, mestrado e alta exigência acadêmica.</p>
+          <a href="#planos" class="btn btn-gold">Ver planos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAND -->
+  <div class="stats-band">
+    <div class="container stats-inner">
+      <div class="stat-item">
+        <strong>8.000+</strong>
+        <span>Alunos ativos</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <strong>A1 → C2</strong>
+        <span>Todos os níveis CECRL</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <strong>97%</strong>
+        <span>Aprovação no DELF/DALF</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <strong>10 aulas</strong>
+        <span>Grátis para começar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NÍVEIS / ROTEIRO -->
+  <section class="levels" id="delf">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Classificação oficial</span>
+        <h2>Escolha o nível e siga um roteiro claro.</h2>
+        <p>Cada nível tem competências definidas, roteiro próprio e módulo intensivo DELF/DALF.</p>
+      </div>
+      <div class="levels-grid">
+        <a href="#" class="level-card level-a1">
+          <span class="level-badge">A1</span>
+          <h3>DELF A1 — Premiers réflexes</h3>
+          <p>Comprendre, saluer, se présenter et répondre simplement sans paniquer.</p>
+          <span class="level-link">Ver roteiro completo →</span>
+        </a>
+        <a href="#" class="level-card level-a2">
+          <span class="level-badge">A2</span>
+          <h3>DELF A2 — Autonomie de base</h3>
+          <p>Gérer les situations quotidiennes : achat, transport, invitation, message, rendez-vous.</p>
+          <span class="level-link">Ver roteiro completo →</span>
+        </a>
+        <a href="#" class="level-card level-b1">
+          <span class="level-badge">B1</span>
+          <h3>DELF B1 — Indépendance réelle</h3>
+          <p>Raconter, donner son opinion, justifier et interagir avec assurance.</p>
+          <span class="level-link">Ver roteiro completo →</span>
+        </a>
+        <a href="#" class="level-card level-b2 featured-level">
+          <span class="level-badge">B2</span>
+          <h3>DELF B2 — Université et argumentation</h3>
+          <p>Défendre une position, écrire une argumentation solide et parler avec crédibilité académique.</p>
+          <span class="level-link">Ver roteiro completo →</span>
+        </a>
+        <a href="#" class="level-card level-c1">
+          <span class="level-badge">C1</span>
+          <h3>DALF C1 — Niveau académique avancé</h3>
+          <p>Synthétiser, argumenter, nuancer et tenir un exposé exigeant.</p>
+          <span class="level-link">Ver roteiro completo →</span>
+        </a>
+        <a href="#" class="level-card level-c2">
+          <span class="level-badge">C2</span>
+          <h3>DALF C2 — Maîtrise et précision</h3>
+          <p>Produire une langue très précise, structurée, nuancée et naturelle.</p>
+          <span class="level-link">Ver roteiro completo →</span>
         </a>
       </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <strong>8.000+</strong>
-          <span>Alunos ativos</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <strong>4.9⭐</strong>
-          <span>Avaliação média</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <strong>97%</strong>
-          <span>Taxa de aprovação</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <strong>5 anos</strong>
-          <span>De experiência</span>
-        </div>
-      </div>
     </div>
-    <div class="hero-image-wrap">
-      <div class="hero-card floating">
-        <div class="card-avatar">MA</div>
+  </section>
+
+  <!-- AULAS GRATUITAS -->
+  <section class="free-lessons" id="aulas">
+    <div class="container">
+      <div class="free-header">
         <div>
-          <p class="card-name">Maria Aparecida</p>
-          <p class="card-note">Passou no DELF B2! 🎉</p>
+          <span class="eyebrow">Método freemium</span>
+          <h2>Aulas abertas para começar.</h2>
+          <p>As 10 primeiras aulas são livres. Para baixar as fichas PDF, marcar progresso e receber o acompanhamento, crie sua conta gratuita.</p>
         </div>
       </div>
-      <div class="hero-card floating delay-1">
-        <div class="card-avatar green">JL</div>
-        <div>
-          <p class="card-name">João Lucas</p>
-          <p class="card-note">Conseguiu emprego em Paris 🇫🇷</p>
-        </div>
+      <div class="free-feature-card">
+        <span class="card-eyebrow">Recurso freemium essencial</span>
+        <h3>Atelier dos números com áudio 100% francês</h3>
+        <p>Idade, preços, horários, telefone e pronúncia. Uma aula de referência para voltar sempre que precisar.</p>
+        <a href="#" class="btn btn-gold">Abrir números</a>
       </div>
-    </div>
-  </section>
-
-  <!-- LOGOS / SOCIAL PROOF -->
-  <section class="social-proof">
-    <div class="container">
-      <p class="sp-label">Nossos alunos trabalham e estudam em:</p>
-      <div class="sp-logos">
-        <span class="sp-logo">🏛️ Sciences Po</span>
-        <span class="sp-logo">🗼 Sorbonne</span>
-        <span class="sp-logo">✈️ Air France</span>
-        <span class="sp-logo">🌍 UNESCO</span>
-        <span class="sp-logo">💼 L'Oréal</span>
-        <span class="sp-logo">🏢 Total Energies</span>
+      <div class="lessons-list">
+        <a href="#" class="lesson-card">
+          <div class="lesson-meta">
+            <span class="lesson-eyebrow">Francês essencial</span>
+            <span class="lesson-num">01</span>
+          </div>
+          <h4>Aula 01 — Bonjour, merci, au revoir</h4>
+          <div class="lesson-tag">Primeiro contato — Entre em francês com elegância.</div>
+          <p>A primeira aula entrega as palavras de presença: olá, obrigado, por favor e até logo.</p>
+          <div class="lesson-footer">
+            <span class="badge-level">A0</span>
+            <span class="btn btn-sm btn-outline-dark">Abrir aula</span>
+          </div>
+        </a>
+        <a href="#" class="lesson-card">
+          <div class="lesson-meta">
+            <span class="lesson-eyebrow">Apresentação</span>
+            <span class="lesson-num">02</span>
+          </div>
+          <h4>Aula 02 — Je m'appelle</h4>
+          <div class="lesson-tag">Apresentação — Diga seu nome sem travar.</div>
+          <p>Você aprende uma apresentação curta, natural e pronta para usar em viagem, aula ou reunião.</p>
+          <div class="lesson-footer">
+            <span class="badge-level">A0</span>
+            <span class="btn btn-sm btn-outline-dark">Abrir aula</span>
+          </div>
+        </a>
+        <a href="#" class="lesson-card">
+          <div class="lesson-meta">
+            <span class="lesson-eyebrow">Identidade</span>
+            <span class="lesson-num">03</span>
+          </div>
+          <h4>Aula 03 — Je suis brésilien</h4>
+          <div class="lesson-tag">Origem — Fale quem você é.</div>
+          <p>Use <em>je suis</em> e <em>je viens de</em> para se posicionar em uma conversa simples.</p>
+          <div class="lesson-footer">
+            <span class="badge-level">A0</span>
+            <span class="btn btn-sm btn-outline-dark">Abrir aula</span>
+          </div>
+        </a>
       </div>
-    </div>
-  </section>
-
-  <!-- MÉTODO -->
-  <section class="method" id="metodo">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Nosso Método</span>
-        <h2>A forma mais rápida de aprender francês</h2>
-        <p>Combinamos as mais avançadas técnicas de aquisição de idiomas com uma abordagem prática e imersiva.</p>
-      </div>
-      <div class="method-grid">
-        <div class="method-card">
-          <div class="method-icon">🎯</div>
-          <h3>Imersão Total</h3>
-          <p>Desde a primeira aula você já ouve, fala e pensa em francês. Chega de decorar gramática sem contexto.</p>
-        </div>
-        <div class="method-card featured">
-          <div class="method-icon">🧠</div>
-          <h3>Repetição Espaçada</h3>
-          <p>Nosso sistema de flashcards inteligente garante que você nunca mais esqueça o vocabulário aprendido.</p>
-          <span class="method-badge">Mais popular</span>
-        </div>
-        <div class="method-card">
-          <div class="method-icon">🗣️</div>
-          <h3>Conversação Real</h3>
-          <p>Grupos de conversação semanais com falantes nativos para desenvolver sua fala com naturalidade.</p>
-        </div>
-        <div class="method-card">
-          <div class="method-icon">📱</div>
-          <h3>Aprendizado Contínuo</h3>
-          <p>Acesso 24/7 à plataforma, aulas gravadas e materiais exclusivos para estudar onde e quando quiser.</p>
-        </div>
-        <div class="method-card">
-          <div class="method-icon">✅</div>
-          <h3>Certificação DELF/DALF</h3>
-          <p>Preparação completa para os exames oficiais reconhecidos mundialmente pelo governo francês.</p>
-        </div>
-        <div class="method-card">
-          <div class="method-icon">👥</div>
-          <h3>Comunidade Exclusiva</h3>
-          <p>Entre para nosso grupo privado com milhares de alunos, eventos culturais e desafios mensais.</p>
-        </div>
+      <div class="lessons-cta">
+        <a href="#" class="btn btn-dark">Ver todas as aulas</a>
       </div>
     </div>
   </section>
 
-  <!-- CURSOS -->
-  <section class="courses" id="cursos">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Nossos Cursos</span>
-        <h2>Escolha o caminho certo para você</h2>
-        <p>Cada curso é desenhado para um objetivo específico. Encontre o que combina com sua meta.</p>
-      </div>
-      <div class="courses-grid">
-        <div class="course-card">
-          <div class="course-level beginner">Iniciante</div>
-          <h3>Francês do Zero</h3>
-          <p>Para quem nunca estudou francês. Construa uma base sólida do básico ao intermediário.</p>
-          <ul class="course-features">
-            <li>✓ Fonética e pronúncia</li>
-            <li>✓ Vocabulário essencial (1.500 palavras)</li>
-            <li>✓ Gramática progressiva</li>
-            <li>✓ 60 aulas em vídeo</li>
-          </ul>
-          <a href="#precos" class="btn btn-outline">Saiba mais</a>
-        </div>
-        <div class="course-card course-featured">
-          <div class="course-badge-top">⭐ Mais Vendido</div>
-          <div class="course-level intermediate">Intermediário</div>
-          <h3>Francês Completo</h3>
-          <p>Do básico ao avançado. O curso mais completo para quem quer alcançar fluência real.</p>
-          <ul class="course-features">
-            <li>✓ Tudo do curso básico +</li>
-            <li>✓ 120 aulas ao vivo gravadas</li>
-            <li>✓ Aulas de conversação</li>
-            <li>✓ Preparação DELF A1–B2</li>
-            <li>✓ Acesso vitalício</li>
-          </ul>
-          <a href="#precos" class="btn btn-primary">Saiba mais</a>
-        </div>
-        <div class="course-card">
-          <div class="course-level advanced">Avançado</div>
-          <h3>Fluência & Negócios</h3>
-          <p>Para quem já tem base e quer o domínio do francês profissional e culto.</p>
-          <ul class="course-features">
-            <li>✓ Francês empresarial</li>
-            <li>✓ Vocabulário técnico avançado</li>
-            <li>✓ Prep. DALF C1/C2</li>
-            <li>✓ Mentoria individual</li>
-          </ul>
-          <a href="#precos" class="btn btn-outline">Saiba mais</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEPOIMENTOS (CARROSSEL) -->
+  <!-- DEPOIMENTOS CARROSSEL -->
   <section class="testimonials" id="depoimentos">
     <div class="container">
-      <div class="section-header light">
-        <span class="section-tag light">Depoimentos</span>
-        <h2>O que nossos alunos dizem</h2>
-        <p>Histórias reais de quem transformou sua vida aprendendo francês.</p>
+      <div class="section-header">
+        <span class="eyebrow light">Depoimentos</span>
+        <h2>O que os alunos dizem.</h2>
+        <p>Brasileiros que aprenderam francês de verdade com o método Francês Direto.</p>
       </div>
 
-      <div class="carousel-wrapper">
-        <button class="carousel-btn prev" id="prevBtn" aria-label="Anterior">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      <div class="carousel-wrap">
+        <button class="car-btn car-prev" id="prevBtn" aria-label="Anterior">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
 
-        <div class="carousel-viewport" id="carouselViewport">
-          <div class="carousel-track" id="carouselTrack">
+        <div class="car-viewport" id="carViewport">
+          <div class="car-track" id="carTrack">
 
-            <div class="testimonial-card">
-              <div class="stars">★★★★★</div>
-              <blockquote>"O Francês Direto mudou completamente minha vida profissional. Consegui uma transferência para o escritório de Paris da minha empresa depois de apenas 18 meses de curso!"</blockquote>
-              <div class="testimonial-author">
-                <div class="author-avatar" style="background:#4F46E5">CA</div>
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <blockquote>"Passei no DELF B2 na primeira tentativa. O roteiro do Francês Direto é exatamente o que a banca exige — sem enrolação, sem conteúdo fora do alvo."</blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" style="background:#4F46E5">CA</div>
                 <div>
                   <strong>Carlos Andrade</strong>
-                  <span>Engenheiro, São Paulo</span>
+                  <span>Passou no DELF B2 · São Paulo</span>
                 </div>
               </div>
             </div>
 
-            <div class="testimonial-card">
-              <div class="stars">★★★★★</div>
-              <blockquote>"Tentei vários métodos antes e nunca conseguia manter a consistência. Aqui a metodologia é tão envolvente que virei viciada em aprender! Passei no DELF B2 na primeira tentativa."</blockquote>
-              <div class="testimonial-author">
-                <div class="author-avatar" style="background:#059669">FS</div>
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <blockquote>"Fiz o módulo C1 depois do B2 e a progressão foi natural. O Pierre explica com uma clareza que nenhum professor brasileiro conseguiu."</blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" style="background:#059669">FS</div>
                 <div>
                   <strong>Fernanda Souza</strong>
-                  <span>Professora, Rio de Janeiro</span>
+                  <span>Mestrado em Paris · Rio de Janeiro</span>
                 </div>
               </div>
             </div>
 
-            <div class="testimonial-card">
-              <div class="stars">★★★★★</div>
-              <blockquote>"Incrível como em 6 meses já consigo me comunicar bem em francês. Os professores são excepcionais e a comunidade de alunos me motiva todos os dias."</blockquote>
-              <div class="testimonial-author">
-                <div class="author-avatar" style="background:#DC2626">RL</div>
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <blockquote>"Em 8 meses fui do zero ao B2. O método é sério: você estuda o que vai cair, não perde tempo. A parte de produção escrita me salvou na prova."</blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" style="background:#B45309">RL</div>
                 <div>
                   <strong>Rafael Lima</strong>
-                  <span>Designer, Belo Horizonte</span>
+                  <span>Aprovado no DELF B2 · Belo Horizonte</span>
                 </div>
               </div>
             </div>
 
-            <div class="testimonial-card">
-              <div class="stars">★★★★★</div>
-              <blockquote>"Minha filha de 14 anos começou o curso e em menos de um ano já conseguiu uma bolsa de estudos em Grenoble. O Francês Direto foi fundamental nessa conquista!"</blockquote>
-              <div class="testimonial-author">
-                <div class="author-avatar" style="background:#D97706">AM</div>
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <blockquote>"Minha filha conseguiu bolsa em Grenoble. Ela estudou com o Francês Direto por um ano e chegou no C1. A qualidade é comparável a cursos europeus."</blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" style="background:#7C3AED">AM</div>
                 <div>
                   <strong>Ana Mendes</strong>
-                  <span>Empresária, Curitiba</span>
+                  <span>Mãe de aluna · Curitiba</span>
                 </div>
               </div>
             </div>
 
-            <div class="testimonial-card">
-              <div class="stars">★★★★★</div>
-              <blockquote>"Sou médico e precisava do francês para uma especialização na França. O curso de Fluência & Negócios foi perfeito. Hoje me comunico perfeitamente no ambiente acadêmico."</blockquote>
-              <div class="testimonial-author">
-                <div class="author-avatar" style="background:#7C3AED">PO</div>
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <blockquote>"Precisava do DALF C1 para a especialização médica em Lyon. O módulo C1 do Francês Direto é denso, exigente e exatamente calibrado para a prova."</blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" style="background:#0891B2">PO</div>
                 <div>
                   <strong>Dr. Pedro Oliveira</strong>
-                  <span>Médico, Porto Alegre</span>
+                  <span>Médico aprovado no DALF C1 · Porto Alegre</span>
                 </div>
               </div>
             </div>
 
-            <div class="testimonial-card">
-              <div class="stars">★★★★★</div>
-              <blockquote>"As aulas de conversação com nativos são o diferencial que nenhum outro curso tem. Em 8 meses estava assistindo séries francesas sem legendas. Simplesmente incrível!"</blockquote>
-              <div class="testimonial-author">
-                <div class="author-avatar" style="background:#0891B2">JR</div>
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <blockquote>"As 100 questões QCM por módulo são ouro. Cheguei na prova real e reconheci o formato de tudo. Nunca fui tão bem preparada para um exame."</blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" style="background:#BE185D">JR</div>
                 <div>
                   <strong>Juliana Rocha</strong>
-                  <span>Advogada, Brasília</span>
+                  <span>Aprovada DELF B2 · Brasília</span>
                 </div>
               </div>
             </div>
 
-            <div class="testimonial-card">
-              <div class="stars">★★★★★</div>
-              <blockquote>"Tinha 52 anos quando comecei e achei que seria difícil demais. O método é tão didático que aprendi mais rápido do que imaginava. Nunca é tarde para aprender!"</blockquote>
-              <div class="testimonial-author">
-                <div class="author-avatar" style="background:#BE185D">MC</div>
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <blockquote>"Comecei com as aulas gratuitas e em duas semanas já sabia que valia investir. O conteúdo premium é ainda mais rico. Melhor investimento que fiz."</blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" style="background:#047857">MC</div>
                 <div>
-                  <strong>Maria Costa</strong>
-                  <span>Aposentada, Fortaleza</span>
+                  <strong>Mariana Costa</strong>
+                  <span>Aluna do módulo B1 · Fortaleza</span>
                 </div>
               </div>
             </div>
 
-            <div class="testimonial-card">
-              <div class="stars">★★★★★</div>
-              <blockquote>"Trabalho em hotelaria de luxo e o francês abriu muitas portas. Hoje atendo hóspedes francófonos com confiança total. O investimento valeu cada centavo."</blockquote>
-              <div class="testimonial-author">
-                <div class="author-avatar" style="background:#047857">TB</div>
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <blockquote>"Trabalho no setor de hotelaria de luxo e precisava do francês para interagir com hóspedes. O TCF DAP foi o caminho certo e o Francês Direto me levou lá."</blockquote>
+              <div class="testi-author">
+                <div class="testi-avatar" style="background:#92400E">TB</div>
                 <div>
                   <strong>Thiago Barros</strong>
-                  <span>Hoteleiro, Florianópolis</span>
+                  <span>Aprovado no TCF · Florianópolis</span>
                 </div>
               </div>
             </div>
@@ -327,176 +339,211 @@
           </div>
         </div>
 
-        <button class="carousel-btn next" id="nextBtn" aria-label="Próximo">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        <button class="car-btn car-next" id="nextBtn" aria-label="Próximo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
       </div>
-
-      <div class="carousel-dots" id="carouselDots"></div>
-
+      <div class="car-dots" id="carDots"></div>
     </div>
   </section>
 
-  <!-- PREÇOS -->
-  <section class="pricing" id="precos">
+  <!-- PLANOS / PREÇOS -->
+  <section class="planos" id="planos">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">Investimento</span>
-        <h2>Planos para todos os objetivos</h2>
-        <p>Escolha o plano ideal e comece hoje mesmo. Garantia de 30 dias ou seu dinheiro de volta.</p>
+        <span class="eyebrow">Académie CECRL</span>
+        <h2>Cursos completos A1 ao C2.</h2>
+        <p>Compre o módulo do seu nível. Acesso vitalício, PDF, QCM e preparação oficial DELF/DALF.</p>
       </div>
+      <div class="planos-grid">
 
-      <div class="pricing-toggle">
-        <span class="toggle-label active" id="lblMonthly">Mensal</span>
-        <label class="toggle-switch" for="pricingToggle">
-          <input type="checkbox" id="pricingToggle" />
-          <span class="toggle-slider"></span>
-        </label>
-        <span class="toggle-label" id="lblAnnual">Anual <em class="save-badge">Economize 40%</em></span>
-      </div>
-
-      <div class="pricing-grid">
-        <div class="pricing-card">
-          <div class="plan-name">Básico</div>
-          <div class="plan-price">
-            <span class="currency">R$</span>
-            <span class="amount monthly-price">97</span>
-            <span class="amount annual-price" style="display:none">57</span>
-            <span class="period">/mês</span>
+        <div class="plano-card">
+          <span class="plano-level plano-a">A1–A2</span>
+          <h3>Curso A1/A2 — Essencial</h3>
+          <p>Construir uma base sólida em francês do dia a dia, apresentação e situações práticas.</p>
+          <div class="plano-tags">
+            <span>DELF A1/A2</span>
+            <span>80–120H</span>
+            <span>6 UNIDADES</span>
+            <span>100 QCM</span>
           </div>
-          <p class="plan-desc">Perfeito para começar sua jornada no francês.</p>
-          <ul class="plan-features">
-            <li><span class="check">✓</span> Acesso ao Curso "Francês do Zero"</li>
-            <li><span class="check">✓</span> 60 aulas em vídeo</li>
-            <li><span class="check">✓</span> Materiais de estudo em PDF</li>
-            <li><span class="check">✓</span> Suporte por e-mail</li>
-            <li><span class="muted">✗</span> Aulas ao vivo</li>
-            <li><span class="muted">✗</span> Comunidade exclusiva</li>
-          </ul>
-          <a href="#" class="btn btn-outline btn-full">Começar Agora</a>
+          <div class="plano-price"><strong>R$ 497</strong></div>
+          <a href="#" class="btn btn-outline-dark btn-full">Ver programa</a>
+          <a href="#" class="btn btn-dark btn-full">Comprar módulo A1/A2</a>
         </div>
 
-        <div class="pricing-card featured">
-          <div class="featured-badge">Mais Popular</div>
-          <div class="plan-name">Completo</div>
-          <div class="plan-price">
-            <span class="currency">R$</span>
-            <span class="amount monthly-price">197</span>
-            <span class="amount annual-price" style="display:none">117</span>
-            <span class="period">/mês</span>
+        <div class="plano-card">
+          <span class="plano-level plano-b1">B1</span>
+          <h3>Curso B1 — Independência</h3>
+          <p>Narrar, opinar, justificar e interagir com clareza em contextos cotidianos e profissionais.</p>
+          <div class="plano-tags">
+            <span>DELF B1</span>
+            <span>150–200H</span>
+            <span>6 UNIDADES</span>
+            <span>100 QCM</span>
           </div>
-          <p class="plan-desc">Tudo que você precisa para alcançar fluência real.</p>
-          <ul class="plan-features">
-            <li><span class="check">✓</span> Todos os cursos desbloqueados</li>
-            <li><span class="check">✓</span> 180+ aulas ao vivo (gravadas)</li>
-            <li><span class="check">✓</span> 4 aulas ao vivo por mês</li>
-            <li><span class="check">✓</span> Comunidade exclusiva</li>
-            <li><span class="check">✓</span> Correção de redações</li>
-            <li><span class="check">✓</span> Prep. DELF A1–B2</li>
-          </ul>
-          <a href="#" class="btn btn-primary btn-full">Começar Agora</a>
+          <div class="plano-price"><strong>R$ 697</strong></div>
+          <a href="#" class="btn btn-outline-dark btn-full">Ver programa</a>
+          <a href="#" class="btn btn-dark btn-full">Comprar módulo B1</a>
         </div>
 
-        <div class="pricing-card">
-          <div class="plan-name">Elite</div>
-          <div class="plan-price">
-            <span class="currency">R$</span>
-            <span class="amount monthly-price">397</span>
-            <span class="amount annual-price" style="display:none">237</span>
-            <span class="period">/mês</span>
+        <div class="plano-card plano-featured">
+          <div class="plano-badge">Mais procurado</div>
+          <span class="plano-level plano-b2">B2</span>
+          <h3>Curso B2 — Université</h3>
+          <p>Defender posições, escrever argumentações sólidas e falar com credibilidade acadêmica.</p>
+          <div class="plano-tags">
+            <span>DELF B2</span>
+            <span>180–220H</span>
+            <span>6 UNIDADES</span>
+            <span>100 QCM</span>
           </div>
-          <p class="plan-desc">Para quem quer resultados rápidos com acompanhamento individual.</p>
-          <ul class="plan-features">
-            <li><span class="check">✓</span> Tudo do plano Completo +</li>
-            <li><span class="check">✓</span> 4 mentorias individuais/mês</li>
-            <li><span class="check">✓</span> Conversação 1:1 com nativo</li>
-            <li><span class="check">✓</span> Prep. DALF C1/C2</li>
-            <li><span class="check">✓</span> Certificado reconhecido</li>
-            <li><span class="check">✓</span> Suporte prioritário 24/7</li>
-          </ul>
-          <a href="#" class="btn btn-outline btn-full">Começar Agora</a>
+          <div class="plano-price"><strong>R$ 797</strong></div>
+          <a href="#" class="btn btn-outline-gold btn-full">Ver programa</a>
+          <a href="#" class="btn btn-gold btn-full">Comprar módulo B2</a>
         </div>
+
+        <div class="plano-card">
+          <span class="plano-level plano-c1">C1</span>
+          <h3>Curso C1 — Alto nível acadêmico</h3>
+          <p>Sintetizar, nuançar, argumentar e performar em contexto acadêmico ou profissional exigente.</p>
+          <div class="plano-tags">
+            <span>DALF</span>
+            <span>200–250H</span>
+            <span>6 UNIDADES</span>
+            <span>100 QCM</span>
+          </div>
+          <div class="plano-price"><strong>R$ 997</strong></div>
+          <a href="#" class="btn btn-outline-dark btn-full">Ver programa</a>
+          <a href="#" class="btn btn-dark btn-full">Comprar módulo C1</a>
+        </div>
+
+        <div class="plano-card">
+          <span class="plano-level plano-c2">C2</span>
+          <h3>Curso C2 — Maîtrise</h3>
+          <p>Refinar estilo, precisão e naturalidade para um francês quase profissional, flexível e elegante.</p>
+          <div class="plano-tags">
+            <span>DALF</span>
+            <span>250H+</span>
+            <span>6 UNIDADES</span>
+            <span>100 QCM</span>
+          </div>
+          <div class="plano-price"><strong>R$ 1297</strong></div>
+          <a href="#" class="btn btn-outline-dark btn-full">Ver programa</a>
+          <a href="#" class="btn btn-dark btn-full">Comprar módulo C2</a>
+        </div>
+
       </div>
 
-      <div class="guarantee">
-        <span class="guarantee-icon">🛡️</span>
-        <div>
-          <strong>Garantia Incondicional de 30 Dias</strong>
-          <p>Se por qualquer motivo você não ficar satisfeito nos primeiros 30 dias, devolvemos 100% do seu investimento. Sem burocracia, sem perguntas.</p>
+      <div class="planos-note">
+        <span>✓ Acesso vitalício</span>
+        <span>·</span>
+        <span>✓ PDF por unidade</span>
+        <span>·</span>
+        <span>✓ 100 QCM por módulo</span>
+        <span>·</span>
+        <span>✓ Preparação DELF/DALF oficial</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECURSOS -->
+  <section class="recursos" id="recursos">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Recursos</span>
+        <h2>Ferramentas para estudar melhor.</h2>
+        <p>Materiais de referência fora da progressão principal, para revisar rápido e ganhar autonomia.</p>
+      </div>
+      <div class="recursos-grid">
+        <a href="#" class="recurso-card">
+          <h4>Atelier — Les nombres</h4>
+          <p>Números, idade, preços, horários e telefone com áudio 100% francês.</p>
+        </a>
+        <a href="#" class="recurso-card">
+          <h4>Conjugação essencial</h4>
+          <p>Os principais verbos franceses, pesquisáveis e organizados por tempo verbal.</p>
+        </a>
+        <a href="#" class="recurso-card">
+          <h4>Académie CECRL</h4>
+          <p>Cursos completos A1 a C2 com PDF, programa profissional e QCM de 100 perguntas.</p>
+        </a>
+        <a href="#" class="recurso-card">
+          <h4>DELF/DALF</h4>
+          <p>Roteiro por níveis, competências, recursos oficiais FEI e módulos intensivos.</p>
+        </a>
+        <a href="#" class="recurso-card">
+          <h4>B2 / TCF</h4>
+          <p>Página stratégique pour université, dossier académique e prova de nível.</p>
+        </a>
+        <a href="#" class="recurso-card">
+          <h4>TCF</h4>
+          <p>Estratégia para teste de nível, DAP, université e objetivos administrativos.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESSOURCES OFFICIELLES -->
+  <section class="official-resources">
+    <div class="container">
+      <div class="official-inner">
+        <div class="official-header">
+          <span class="eyebrow">Ressources officielles</span>
+          <h2>Usar o oficial sem perder tempo.</h2>
+          <p>Os links abaixo levam diretamente a France Éducation international. Eles servem para trabalhar com exemplos reais, áudios MP3, documentos de candidato, correções e grades de avaliação.</p>
+        </div>
+        <div class="official-links">
+          <a href="#" class="official-link-card">
+            <h4>Ressources officielles DELF, DALF, TCF</h4>
+            <p>Page centrale FEI avec exemples de sujets, documents candidats, correcteurs, audios MP3 et grilles.</p>
+          </a>
+          <a href="#" class="official-link-card">
+            <h4>DELF tout public</h4>
+            <p>Présentation officielle des niveaux A1, A2, B1 et B2.</p>
+          </a>
+          <a href="#" class="official-link-card">
+            <h4>DALF</h4>
+            <p>Présentation officielle des niveaux C1 et C2.</p>
+          </a>
+          <a href="#" class="official-link-card">
+            <h4>TCF tout public</h4>
+            <p>Présentation officielle du TCF, modalités et calendrier.</p>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="faq" id="faq">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Dúvidas Frequentes</span>
-        <h2>Temos resposta para tudo</h2>
+  <!-- PIERRE -->
+  <section class="pierre" id="pierre">
+    <div class="container pierre-inner">
+      <div class="pierre-text">
+        <span class="eyebrow">Professor nativo</span>
+        <h2>Aprenda com Pierre.</h2>
+        <p>Pierre é professor de francês nativo com experiência em ensinar brasileiros. Ele conhece os erros típicos do falante de português e constrói cada aula para corrigi-los na raiz.</p>
+        <p>O método não é de repetição mecânica. É de compreensão real, com exemplos franceses autênticos, progressão clara e foco em aprovação nas provas oficiais.</p>
+        <a href="#comecar" class="btn btn-dark btn-lg">Começar com Pierre</a>
       </div>
-      <div class="faq-list">
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            Preciso ter algum conhecimento prévio de francês?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>Não! O curso "Francês do Zero" foi desenvolvido especialmente para quem nunca teve contato com o idioma. Começamos do absoluto zero e evoluímos de forma progressiva e natural.</p>
+      <div class="pierre-card">
+        <div class="pierre-avatar">P</div>
+        <div class="pierre-info">
+          <strong>Pierre</strong>
+          <span>Professor nativo de francês</span>
+        </div>
+        <div class="pierre-quote">
+          <em>"O francês que funciona não é o que você memoriza, é o que você compreende e reconhece como natural."</em>
+        </div>
+        <div class="pierre-stats">
+          <div>
+            <strong>8.000+</strong>
+            <span>Alunos ensinados</span>
+          </div>
+          <div>
+            <strong>5 anos</strong>
+            <span>De método ativo</span>
           </div>
         </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            Quantas horas por semana preciso estudar?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>Recomendamos pelo menos 45 minutos por dia para resultados consistentes. Mas nosso método é flexível — você pode adaptar ao seu ritmo. Muitos alunos avançam estudando apenas 3 vezes por semana.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            As aulas são ao vivo ou gravadas?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>Oferecemos os dois formatos! O conteúdo principal é gravado para você acessar quando quiser. Além disso, realizamos aulas ao vivo semanais e grupos de conversação que são todos gravados e disponibilizados na plataforma.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            Por quanto tempo terei acesso ao conteúdo?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>Enquanto sua assinatura estiver ativa, você tem acesso ilimitado a todo o conteúdo. Nos planos anuais, você também recebe acesso vitalício às aulas que estavam disponíveis durante o período de assinatura.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            O certificado é reconhecido?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>Emitimos um certificado de conclusão do Francês Direto. Para certificados internacionalmente reconhecidos (DELF/DALF), preparamos nossos alunos para os exames oficiais do governo francês. Nossos alunos têm uma taxa de aprovação de 97%!</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            Posso cancelar a qualquer momento?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer">
-            <p>Sim! Você pode cancelar sua assinatura a qualquer momento, sem multas ou taxas adicionais. E se cancelar nos primeiros 30 dias, devolvemos 100% do valor investido.</p>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -504,11 +551,11 @@
   <!-- CTA FINAL -->
   <section class="cta-final">
     <div class="container cta-inner">
-      <div class="cta-flag">🇫🇷</div>
-      <h2>Pronto para começar sua jornada?</h2>
-      <p>Mais de 8.000 brasileiros já estão falando francês com confiança. Você é o próximo.</p>
-      <a href="#precos" class="btn btn-white btn-lg">Quero Aprender Francês Agora</a>
-      <p class="cta-note">Acesso imediato · Cancele quando quiser · Garantia de 30 dias</p>
+      <span class="eyebrow light">Comece hoje</span>
+      <h2>10 aulas gratuitas.<br />Sem cartão. Sem promessa.</h2>
+      <p>Crie sua conta, acesse as primeiras aulas e veja se o método faz sentido para você antes de qualquer investimento.</p>
+      <a href="#" class="btn btn-gold btn-lg">Criar conta gratuita</a>
+      <p class="cta-small">Já tem conta? <a href="#entrar">Entrar →</a></p>
     </div>
   </section>
 
@@ -516,51 +563,42 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <a href="#" class="logo">
-          <span class="logo-fr">FR</span>
-          <span class="logo-text">Francês <strong>Direto</strong></span>
+        <a href="/" class="logo footer-logo">
+          <span class="logo-name">Francês</span>
+          <span class="logo-accent">Direto</span>
         </a>
-        <p>O método mais eficaz para brasileiros aprenderem francês de verdade.</p>
-        <div class="social-links">
-          <a href="#" class="social-link" aria-label="Instagram">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
-          <a href="#" class="social-link" aria-label="YouTube">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20.06 12 20.06 12 20.06s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
-          </a>
-          <a href="#" class="social-link" aria-label="WhatsApp">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-          </a>
-        </div>
+        <p>Francês prático para brasileiros que querem falar de verdade.</p>
       </div>
-      <div class="footer-links">
+      <div class="footer-nav">
         <div class="footer-col">
-          <h4>Cursos</h4>
-          <a href="#">Francês do Zero</a>
-          <a href="#">Francês Completo</a>
-          <a href="#">Fluência & Negócios</a>
-          <a href="#">Preparação DELF/DALF</a>
+          <h5>Começar</h5>
+          <a href="#">Francês para brasileiros</a>
+          <a href="#">Francês para viagem</a>
+          <a href="#">Francês A1</a>
         </div>
         <div class="footer-col">
-          <h4>Empresa</h4>
-          <a href="#">Sobre nós</a>
-          <a href="#">Blog</a>
-          <a href="#">Imprensa</a>
-          <a href="#">Trabalhe conosco</a>
+          <h5>Evoluir</h5>
+          <a href="#">Ver planos premium</a>
+          <a href="#">Académie CECRL</a>
+          <a href="#">Preparação DELF B2</a>
+          <a href="#">TCF universidade</a>
         </div>
         <div class="footer-col">
-          <h4>Suporte</h4>
-          <a href="#">Central de Ajuda</a>
+          <h5>Confiança</h5>
+          <a href="#">Sobre</a>
+          <a href="#">Método</a>
           <a href="#">Contato</a>
-          <a href="#">Termos de Uso</a>
-          <a href="#">Privacidade</a>
+          <a href="#">Professor nativo</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="container">
+      <div class="container footer-bottom-inner">
         <p>© 2024 Francês Direto. Todos os direitos reservados.</p>
-        <p>CNPJ: 00.000.000/0001-00 · São Paulo, Brasil</p>
+        <div class="footer-legal">
+          <a href="#">Termos</a>
+          <a href="#">Privacidade</a>
+        </div>
       </div>
     </div>
   </footer>
