@@ -25,25 +25,27 @@ def swap_layers(stack: list[Swap], settings: PrintSettings, total_layers: int) -
 
 
 def swap_instructions(stack: list[Swap], settings: PrintSettings, total_layers: int) -> str:
+    # Slot do AMS = posição na pilha (1 = base), para o roteiro e o fatiador usarem a mesma numeração.
     lines = [
         f"Primeira camada: {settings.first_layer:g} mm; demais: {settings.layer_height:g} mm",
-        f"Comece com: {stack[0].filament.name}",
+        "Slots (AMS): " + ", ".join(f"{slot} = {s.filament.name}" for slot, s in enumerate(stack, 1)),
+        f"Comece com: {stack[0].filament.name} (slot 1)",
     ]
-    for index, filament in swap_layers(stack, settings, total_layers):
+    for slot, (index, filament) in enumerate(swap_layers(stack, settings, total_layers), 2):
         if index is None:
             lines.append(f"(ignorado: {filament.name} começaria acima do topo da peça)")
         else:
             z = settings.layer_top(index)
-            lines.append(f"Camada {index + 1} (Z={z:.2f} mm): troque para {filament.name}")
+            lines.append(f"Camada {index + 1} (Z={z:.2f} mm): troque para {filament.name} (slot {slot})")
     lines += [
         "",
         "Como aplicar:",
         "- PrusaSlicer: abra o .3mf; as trocas já vêm marcadas.",
         "- Bambu Studio / OrcaSlicer: abra o .3mf (ou .stl), ajuste a altura da primeira",
         "  camada e das demais como acima, fatie e, na barra de camadas da prévia, vá a",
-        "  cada camada listada, clique no '+' com o botão direito e adicione uma pausa",
-        "  (ou troca de filamento). Esses fatiadores ignoram trocas vindas de 3MF de",
-        "  outros programas.",
+        "  cada camada listada e clique no '+' com o botão direito. Com AMS, escolha a",
+        "  troca para o slot indicado; sem AMS, adicione uma pausa e troque à mão.",
+        "  Esses fatiadores ignoram trocas vindas de 3MF de outros programas.",
     ]
     return "\n".join(lines) + "\n"
 

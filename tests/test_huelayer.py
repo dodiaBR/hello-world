@@ -231,7 +231,7 @@ class CliTest(unittest.TestCase):
             main([str(image), "--auto", "3", "-f", "Preto", "--width-mm", "20",
                   "--resolution-mm", "0.5", "-o", str(prefix)])
             instructions = Path(f"{prefix}_trocas.txt").read_text()
-            self.assertIn("\nComece com: Preto\n", instructions)
+            self.assertIn("\nComece com: Preto (slot 1)\n", instructions)
             self.assertEqual(instructions.count("troque para"), 2)
 
     def test_swap_above_top_is_reported(self):
