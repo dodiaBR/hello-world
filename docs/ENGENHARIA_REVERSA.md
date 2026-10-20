@@ -25,7 +25,7 @@ proprietários dele (`.hfp`).
   do HueForge.
 - No modo litofania/backlit a relação se inverte (claro = fino).
 
-Em `huelayer`: `heightmap.py` (`layer_counts`, mapeamento linear).
+Em `huelayer`: `heightmap.py` (`layer_counts`).
 
 ### 2. Transmission Distance (TD)
 
@@ -95,7 +95,7 @@ a opacidade da etapa 2 (`simulate.render`). É por isso que a prévia mostra
   filamento. No fatiador (PrusaSlicer, Bambu Studio, Orca) isso vira um
   “color change”/pausa naquela camada.
 
-## O que ficou de fora (próximos passos)
+## Cobertura em relação ao HueForge
 
 | Recurso do HueForge | Situação |
 |---|---|

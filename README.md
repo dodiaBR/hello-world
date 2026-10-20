@@ -45,8 +45,8 @@ python -m huelayer foto.jpg -f Preto --auto 4
 O programa informa a diferença média de cor (ΔE em CIELAB) entre a prévia e a
 imagem: quanto menor, mais fiel.
 
-Opções úteis: `--gamma` (curva de altura: >1 dá mais camadas aos claros), `--layer-height`, `--first-layer`, `--base-height`,
-`--max-height`, `--resolution-mm`, `--invert` (litofania) e `--swap Z_MM`
+Opções úteis: `--gamma` (curva de altura: >1 dá mais camadas aos claros),
+`--layer-height`, `--first-layer`, `--base-height`, `--max-height`, `--resolution-mm`, `--invert` (litofania) e `--swap Z_MM`
 (repetido, para escolher as alturas de troca manualmente).
 
 ## Testes
