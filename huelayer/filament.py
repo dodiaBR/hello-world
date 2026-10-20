@@ -1,0 +1,55 @@
+"""Filamentos e a pilha de trocas de cor."""
+
+from dataclasses import dataclass
+
+import numpy as np
+
+
+@dataclass(frozen=True)
+class Filament:
+    name: str
+    color: tuple[float, float, float]  # RGB em [0, 1]
+    td: float  # Transmission Distance em mm
+
+    @classmethod
+    def parse(cls, spec: str) -> "Filament":
+        """Lê o formato `Nome:#RRGGBB:TD`, ex.: `Preto:#000000:0.6`."""
+        try:
+            name, hex_color, td = spec.rsplit(":", 2)
+            return cls(name, hex_to_rgb(hex_color), float(td))
+        except ValueError as error:
+            raise ValueError(f"filamento inválido {spec!r}; use Nome:#RRGGBB:TD") from error
+
+    @property
+    def luminance(self) -> float:
+        return float(luminance(np.array(self.color)))
+
+
+def hex_to_rgb(hex_color: str) -> tuple[float, float, float]:
+    value = hex_color.lstrip("#")
+    if len(value) != 6:
+        raise ValueError(f"cor inválida {hex_color!r}")
+    return tuple(int(value[i : i + 2], 16) / 255 for i in (0, 2, 4))
+
+
+def luminance(rgb: np.ndarray) -> np.ndarray:
+    """Luma Rec. 709 sobre o último eixo (canais RGB)."""
+    return rgb @ np.array([0.2126, 0.7152, 0.0722])
+
+
+@dataclass(frozen=True)
+class Swap:
+    filament: Filament
+    start_z: float  # altura (mm) a partir da qual este filamento é impresso
+
+
+def auto_stack(filaments: list[Filament], base_height: float, max_height: float) -> list[Swap]:
+    """Ordena do mais escuro ao mais claro e distribui as trocas por igual
+    entre a base e a altura máxima — o mesmo ponto de partida que o HueForge
+    oferece antes do ajuste manual dos sliders."""
+    ordered = sorted(filaments, key=lambda f: f.luminance)
+    span = max_height - base_height
+    return [
+        Swap(filament, 0.0 if i == 0 else base_height + span * i / len(ordered))
+        for i, filament in enumerate(ordered)
+    ]
