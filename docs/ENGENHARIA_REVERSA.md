@@ -20,6 +20,9 @@ proprietários dele (`.hfp`).
 - A altura vai de uma espessura mínima de base até uma altura máxima, sempre
   arredondada para um múltiplo da altura de camada (a primeira camada costuma
   ser mais grossa).
+- Uma curva (`--gamma`) redistribui as camadas: gamma > 1 dá mais camadas aos
+  tons claros, gamma < 1 aos escuros — o papel dos ajustes de contraste/curva
+  do HueForge.
 - No modo litofania/backlit a relação se inverte (claro = fino).
 
 Em `huelayer`: `heightmap.py` (`layer_counts`, mapeamento linear).
@@ -55,14 +58,35 @@ ser calibrada (`simulate.TRANSMISSION_AT_TD`).
   altura máxima (`filament.auto_stack`) e pode ser sobrescrita com `--swap`.
 - Uma camada usa o filamento cuja altura de início está abaixo do topo dela.
 
-### 4. Prévia
+### 4. Otimização automática
+
+O HueForge sugere filamentos e posições de troca; aqui isso é feito por
+otimização (`optimize.py`):
+
+- **Observação-chave:** a cor de um pixel depende só do número de camadas dele.
+  A imagem é resumida, por número de camadas, em quantidade de pixels, soma e
+  soma dos quadrados das cores-alvo. Com isso o erro de uma pilha é calculado
+  sobre ~25 valores, não sobre milhões de pixels.
+- O erro é a diferença de cor média em **CIELAB** (ΔE), que segue melhor a
+  percepção humana do que RGB.
+- `--optimize`: descida por coordenadas nas alturas de troca — move uma troca
+  por vez para a camada que mais reduz o erro, até estabilizar.
+- `--auto N`: testa todas as combinações de N filamentos da biblioteca
+  (`filamentos.json` ou `--library`), cada uma com trocas otimizadas, e fica
+  com a melhor. Filamentos passados com `-f` entram sempre.
+
+Limitação estrutural (compartilhada com o HueForge): a altura vem só da
+luminância. Regiões de cores diferentes mas mesmo brilho recebem o mesmo
+número de camadas e, portanto, a mesma cor impressa.
+
+### 5. Prévia
 
 A cor de cada pixel é calculada compondo as camadas de baixo para cima: a
 primeira camada é o fundo opaco e cada camada seguinte é misturada por cima com
 a opacidade da etapa 2 (`simulate.render`). É por isso que a prévia mostra
 “bandas” de cor — cada banda é uma camada.
 
-### 5. Exportação
+### 6. Exportação
 
 - **STL**: o mapa de alturas vira um sólido fechado (topo em relevo, paredes
   laterais e fundo), com normais para fora (`stl.py`). Os testes verificam que
@@ -75,10 +99,10 @@ a opacidade da etapa 2 (`simulate.render`). É por isso que a prévia mostra
 
 | Recurso do HueForge | Situação |
 |---|---|
-| Curva de altura não linear / ajuste de contraste | ainda não (mapeamento linear) |
+| Curva de altura não linear / ajuste de contraste | gamma (`--gamma`) |
 | Pintura manual de regiões / máscaras | não |
-| Biblioteca de filamentos com TDs | não (passados por linha de comando) |
-| Sugestão automática de filamentos a partir da imagem | não |
+| Biblioteca de filamentos com TDs | sim (`filamentos.json`, `--library`) |
+| Sugestão automática de filamentos a partir da imagem | sim (`--auto N`, `--optimize`) |
 | Borda/moldura e texto na peça | não |
 | Exportação 3MF com trocas embutidas | não (STL + texto) |
 | Interface gráfica com prévia em tempo real | não (CLI) |

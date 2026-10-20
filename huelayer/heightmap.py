@@ -5,8 +5,6 @@ from dataclasses import dataclass
 import numpy as np
 from PIL import Image
 
-from .filament import luminance
-
 
 @dataclass(frozen=True)
 class PrintSettings:
@@ -17,6 +15,7 @@ class PrintSettings:
     base_height: float = 0.48  # espessura mínima (pixels mais escuros)
     max_height: float = 2.0
     invert: bool = False  # True: claro = fino (modo backlit/litofania)
+    gamma: float = 1.0  # >1 dá mais altura (e camadas) aos tons claros; <1, aos escuros
 
     def layer_top(self, index: np.ndarray | int) -> np.ndarray | float:
         """Altura do topo da camada `index` (0 = primeira camada)."""
@@ -29,24 +28,25 @@ class PrintSettings:
         return int(np.floor(round((z - self.first_layer) / self.layer_height, 6))) + 1
 
 
-def load_luminance(path: str, settings: PrintSettings) -> np.ndarray:
-    """Abre a imagem, redimensiona para a resolução de impressão e devolve a
-    luminância em [0, 1] (linha 0 = topo da imagem)."""
+def load_image(path: str, settings: PrintSettings) -> np.ndarray:
+    """Abre a imagem, redimensiona para a resolução de impressão e devolve
+    RGB em [0, 1] (linha 0 = topo da imagem)."""
     image = Image.open(path).convert("RGB")
     columns = max(2, round(settings.width_mm / settings.resolution_mm))
     rows = max(2, round(columns * image.height / image.width))
     image = image.resize((columns, rows), Image.Resampling.LANCZOS)
-    return luminance(np.asarray(image, dtype=float) / 255)
+    return np.asarray(image, dtype=float) / 255
 
 
 def layer_counts(lum: np.ndarray, settings: PrintSettings) -> np.ndarray:
     """Número de camadas impressas em cada pixel.
 
     Front-lit (padrão): claro = mais alto, pois as camadas claras do topo
-    cobrem a base escura. A altura é linear na luminância e arredondada para
-    a camada mais próxima."""
+    cobrem a base escura. A altura segue `luminância ** gamma` e é
+    arredondada para a camada mais próxima."""
     if settings.invert:
         lum = 1 - lum
+    lum = np.clip(lum, 0, 1) ** settings.gamma
     heights = settings.base_height + lum * (settings.max_height - settings.base_height)
     counts = np.rint((heights - settings.first_layer) / settings.layer_height) + 1
     return np.maximum(counts, 1).astype(int)

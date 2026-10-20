@@ -1,0 +1,13 @@
+[
+  {"name": "Preto", "color": "#111111", "td": 0.6},
+  {"name": "Cinza Escuro", "color": "#4a4a4a", "td": 1.0},
+  {"name": "Marrom", "color": "#6b3e1f", "td": 1.2},
+  {"name": "Azul", "color": "#1f4fbf", "td": 1.2},
+  {"name": "Verde", "color": "#2e8b3a", "td": 1.5},
+  {"name": "Vermelho", "color": "#c62828", "td": 1.6},
+  {"name": "Laranja", "color": "#f07a1a", "td": 2.2},
+  {"name": "Cinza Claro", "color": "#b5b5b5", "td": 2.0},
+  {"name": "Pele", "color": "#e8b98f", "td": 3.0},
+  {"name": "Amarelo", "color": "#f2d21b", "td": 3.0},
+  {"name": "Branco", "color": "#ffffff", "td": 2.5}
+]

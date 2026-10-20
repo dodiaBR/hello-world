@@ -1,8 +1,12 @@
 """Filamentos e a pilha de trocas de cor."""
 
+import json
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
+
+DEFAULT_LIBRARY = Path(__file__).with_name("filamentos.json")
 
 
 @dataclass(frozen=True)
@@ -23,6 +27,23 @@ class Filament:
     @property
     def luminance(self) -> float:
         return float(luminance(np.array(self.color)))
+
+
+def load_library(path: str | Path = DEFAULT_LIBRARY) -> list[Filament]:
+    """Lê uma lista JSON de `{"name", "color", "td"}`. Os TDs da biblioteca
+    padrão são valores típicos, não medições: meça os seus filamentos."""
+    entries = json.loads(Path(path).read_text(encoding="utf-8"))
+    return [Filament(e["name"], hex_to_rgb(e["color"]), float(e["td"])) for e in entries]
+
+
+def resolve(spec: str, library: list[Filament]) -> Filament:
+    """Aceita `Nome:#RRGGBB:TD` ou só o nome de um filamento da biblioteca."""
+    if ":" in spec:
+        return Filament.parse(spec)
+    for filament in library:
+        if filament.name.casefold() == spec.casefold():
+            return filament
+    raise ValueError(f"filamento {spec!r} não está na biblioteca")
 
 
 def hex_to_rgb(hex_color: str) -> tuple[float, float, float]:

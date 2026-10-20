@@ -23,14 +23,29 @@ python -m huelayer foto.jpg \
   --width-mm 100 -o saida/foto
 ```
 
-Cada `-f` é `Nome:#RRGGBB:TD` (TD em mm). A ordem é automática, do mais
-escuro ao mais claro. Gera:
+Cada `-f` é `Nome:#RRGGBB:TD` (TD em mm) ou só o nome de um filamento da
+biblioteca (`huelayer/filamentos.json`). A ordem é automática, do mais escuro
+ao mais claro. Gera:
 
 - `saida/foto.stl` — o modelo para fatiar;
 - `saida/foto_preview.png` — prévia simulada da cor impressa;
 - `saida/foto_trocas.txt` — em que camada trocar cada filamento.
 
-Opções úteis: `--layer-height`, `--first-layer`, `--base-height`,
+### Deixar o programa escolher
+
+```sh
+# Otimiza as alturas de troca para os filamentos dados
+python -m huelayer foto.jpg -f Preto -f Vermelho -f Laranja -f Amarelo --optimize
+
+# Escolhe os 4 filamentos da biblioteca que melhor reproduzem a imagem
+# (Preto entra sempre)
+python -m huelayer foto.jpg -f Preto --auto 4
+```
+
+O programa informa a diferença média de cor (ΔE em CIELAB) entre a prévia e a
+imagem: quanto menor, mais fiel.
+
+Opções úteis: `--gamma` (curva de altura: >1 dá mais camadas aos claros), `--layer-height`, `--first-layer`, `--base-height`,
 `--max-height`, `--resolution-mm`, `--invert` (litofania) e `--swap Z_MM`
 (repetido, para escolher as alturas de troca manualmente).
 
