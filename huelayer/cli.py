@@ -1,4 +1,4 @@
-"""Linha de comando: imagem -> STL + prévia + roteiro de trocas."""
+"""Linha de comando: imagem -> 3MF/STL + prévia + roteiro de trocas."""
 
 import argparse
 from pathlib import Path
@@ -6,22 +6,35 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from .filament import DEFAULT_LIBRARY, Swap, auto_stack, load_library, luminance, resolve
-from .heightmap import PrintSettings, heights_from_counts, layer_counts, load_image
+from .filament import DEFAULT_LIBRARY, Filament, Swap, auto_stack, load_library, luminance, resolve
+from .heightmap import PrintSettings, add_border, heights_from_counts, layer_counts, load_image
 from .optimize import PixelStats, choose_filaments, optimize_swaps, stack_error
 from .simulate import render
 from .stl import heightmap_triangles, write_stl
+from .threemf import write_3mf
+
+
+def swap_layers(stack: list[Swap], settings: PrintSettings, total_layers: int) -> list[tuple[int | None, Filament]]:
+    """Índice da primeira camada de cada filamento após o primeiro, ou None
+    quando ele começaria acima do topo da peça."""
+    result = []
+    for swap in stack[1:]:
+        index = settings.layer_index(swap.start_z)
+        result.append((index if index < total_layers else None, swap.filament))
+    return result
 
 
 def swap_instructions(stack: list[Swap], settings: PrintSettings, total_layers: int) -> str:
-    lines = [f"Comece com: {stack[0].filament.name}"]
-    for swap in stack[1:]:
-        index = settings.layer_index(swap.start_z)
-        if index >= total_layers:
-            lines.append(f"(ignorado: {swap.filament.name} começaria acima do topo da peça)")
-            continue
-        z = settings.layer_top(index)
-        lines.append(f"Camada {index + 1} (Z={z:.2f} mm): troque para {swap.filament.name}")
+    lines = [
+        f"Primeira camada: {settings.first_layer:g} mm; demais: {settings.layer_height:g} mm",
+        f"Comece com: {stack[0].filament.name}",
+    ]
+    for index, filament in swap_layers(stack, settings, total_layers):
+        if index is None:
+            lines.append(f"(ignorado: {filament.name} começaria acima do topo da peça)")
+        else:
+            z = settings.layer_top(index)
+            lines.append(f"Camada {index + 1} (Z={z:.2f} mm): troque para {filament.name}")
     return "\n".join(lines) + "\n"
 
 
@@ -51,6 +64,8 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     for field in ("width_mm", "resolution_mm", "first_layer", "layer_height", "base_height", "max_height", "gamma"):
         parser.add_argument(f"--{field.replace('_', '-')}", type=float, default=getattr(defaults, field))
     parser.add_argument("--invert", action="store_true", help="claro = fino (backlit)")
+    parser.add_argument("--border-mm", type=float, default=0.0, help="largura da moldura (0 = sem)")
+    parser.add_argument("--border-height", type=float, help="altura da moldura (padrão: --max-height)")
     args = parser.parse_args(argv)
     if not args.filament and not args.auto:
         parser.error("informe filamentos com -f ou use --auto N")
@@ -90,17 +105,28 @@ def main(argv: list[str] | None = None) -> None:
     except ValueError as error:
         raise SystemExit(str(error)) from error
 
+    error = stack_error(stack, stats, settings)
+    border_height = settings.max_height if args.border_height is None else args.border_height
+    counts = add_border(counts, settings, args.border_mm, border_height)
+
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    write_stl(f"{output}.stl", heightmap_triangles(heights_from_counts(counts, settings), settings.resolution_mm))
+    triangles = heightmap_triangles(heights_from_counts(counts, settings), settings.resolution_mm)
+    total_layers = int(counts.max())
+    changes = [
+        (float(settings.layer_top(index)), filament)
+        for index, filament in swap_layers(stack, settings, total_layers) if index is not None
+    ]
+    write_3mf(f"{output}.3mf", triangles, changes, settings.layer_height, name=output.name)
+    write_stl(f"{output}.stl", triangles)
     preview = (render(counts, stack, settings) * 255).round().astype(np.uint8)
     Image.fromarray(preview).save(f"{output}_preview.png")
-    instructions = swap_instructions(stack, settings, int(counts.max()))
+    instructions = swap_instructions(stack, settings, total_layers)
     Path(f"{output}_trocas.txt").write_text(instructions, encoding="utf-8")
 
     print(instructions, end="")
-    print(f"Diferença média de cor (ΔE): {np.sqrt(stack_error(stack, stats, settings)):.1f}")
-    print(f"Gerado: {output}.stl, {output}_preview.png, {output}_trocas.txt")
+    print(f"Diferença média de cor (ΔE): {np.sqrt(error):.1f}")
+    print(f"Gerado: {output}.3mf, {output}.stl, {output}_preview.png, {output}_trocas.txt")
 
 
 if __name__ == "__main__":

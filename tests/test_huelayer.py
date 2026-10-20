@@ -1,5 +1,10 @@
+import re
+import shutil
+import subprocess
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
+import zipfile
 from collections import Counter
 from pathlib import Path
 
@@ -8,12 +13,13 @@ from PIL import Image
 
 from huelayer.cli import main, swap_instructions
 from huelayer.filament import Filament, auto_stack, load_library, resolve
-from huelayer.heightmap import PrintSettings, heights_from_counts, layer_counts
+from huelayer.heightmap import PrintSettings, add_border, heights_from_counts, layer_counts
 from huelayer.optimize import (
     PixelStats, choose_filaments, optimize_swaps, srgb_to_lab, stack_error, stack_from_layers,
 )
 from huelayer.simulate import TRANSMISSION_AT_TD, layer_opacity, render
 from huelayer.stl import heightmap_triangles
+from huelayer.threemf import indexed_mesh, write_3mf
 
 BLACK = Filament("Preto", (0, 0, 0), 0.6)
 WHITE = Filament("Branco", (1, 1, 1), 2.0)
@@ -58,6 +64,11 @@ class HeightmapTest(unittest.TestCase):
         settings = PrintSettings(**{**self.settings.__dict__, "gamma": 2.0, "max_height": 0.8})
         heights = heights_from_counts(layer_counts(np.array([0.0, 0.5, 1.0]), settings), settings)
         np.testing.assert_allclose(heights, [0.4, 0.5, 0.8])  # sem gamma, 0.5 daria 0.6
+
+    def test_border_surrounds_image_at_fixed_height(self):
+        bordered = add_border(np.ones((2, 3), int), self.settings, width_mm=0.4, height_mm=0.5)
+        self.assertEqual(bordered.shape, (6, 7))
+        self.assertTrue((bordered[0] == 4).all() and (bordered[2:4, 2:5] == 1).all())
 
     def test_layer_index_starts_after_swap_height(self):
         self.assertEqual(self.settings.layer_index(0.0), 0)
@@ -142,6 +153,45 @@ class StlTest(unittest.TestCase):
         self.assertAlmostEqual(volume, expected, delta=0.1)
 
 
+class ThreeMfTest(unittest.TestCase):
+    heights = np.tile(np.linspace(0.48, 2.0, 12), (8, 1))
+
+    def write(self, directory: str) -> Path:
+        path = Path(directory, "peca.3mf")
+        write_3mf(str(path), heightmap_triangles(self.heights, 1.0), [(0.88, RED), (1.28, WHITE)], 0.08)
+        return path
+
+    def test_indexed_mesh_shares_vertices(self):
+        triangles = heightmap_triangles(self.heights, 1.0)
+        vertices, faces = indexed_mesh(triangles)
+        self.assertEqual(len(vertices), 2 * self.heights.size)
+        np.testing.assert_allclose(vertices[faces], triangles.round(6))
+
+    def test_archive_contents(self):
+        with tempfile.TemporaryDirectory() as directory, zipfile.ZipFile(self.write(directory)) as archive:
+            model = ET.fromstring(archive.read("3D/3dmodel.model"))
+            namespace = {"m": "http://schemas.microsoft.com/3dmanufacturing/core/2015/02"}
+            self.assertEqual(len(model.findall(".//m:vertex", namespace)), 2 * self.heights.size)
+            codes = ET.fromstring(archive.read("Metadata/Prusa_Slicer_custom_gcode_per_print_z.xml"))
+            self.assertEqual(
+                [(c.get("print_z"), c.get("color"), c.get("extra")) for c in codes.iter("code")],
+                [("0.8800", "#FF0000", "Vermelho"), ("1.2800", "#FFFFFF", "Branco")],
+            )
+
+    @unittest.skipUnless(shutil.which("prusa-slicer"), "PrusaSlicer não instalado")
+    def test_prusaslicer_inserts_color_changes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            gcode = Path(directory, "peca.gcode")
+            # Perfil com 0.2 mm: a altura de camada por objeto do 3MF precisa prevalecer.
+            subprocess.run(
+                ["prusa-slicer", "--export-gcode", "--first-layer-height", "0.16", "--layer-height", "0.2",
+                 "--center", "100,100", "-o", str(gcode), str(self.write(directory))],
+                check=True, capture_output=True, timeout=300,
+            )
+            changes = re.findall(r";Z:([\d.]+)\n(?:(?!;Z:).*\n)*?;COLOR_CHANGE,T0,(#\w+)", gcode.read_text())
+            self.assertEqual(changes, [("0.88", "#FF0000"), ("1.28", "#FFFFFF")])
+
+
 class CliTest(unittest.TestCase):
     def test_end_to_end(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -159,6 +209,18 @@ class CliTest(unittest.TestCase):
             triangle_count = int.from_bytes(stl[80:84], "little")
             self.assertEqual(len(stl), 84 + 50 * triangle_count)
             self.assertIn("troque para Branco", Path(f"{prefix}_trocas.txt").read_text())
+            with zipfile.ZipFile(f"{prefix}.3mf") as archive:
+                self.assertIn("Metadata/Prusa_Slicer_custom_gcode_per_print_z.xml", archive.namelist())
+
+    def test_border_extends_preview(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory, "cinza.png")
+            Image.fromarray(np.full((20, 40, 3), 128, np.uint8)).save(image)
+            prefix = Path(directory, "peca")
+            main([str(image), "-f", "Preto", "-f", "Branco", "--width-mm", "20", "--resolution-mm", "0.5",
+                  "--border-mm", "2", "-o", str(prefix)])
+            with Image.open(f"{prefix}_preview.png") as preview:
+                self.assertEqual(preview.size, (48, 28))
 
     def test_end_to_end_auto(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -169,7 +231,7 @@ class CliTest(unittest.TestCase):
             main([str(image), "--auto", "3", "-f", "Preto", "--width-mm", "20",
                   "--resolution-mm", "0.5", "-o", str(prefix)])
             instructions = Path(f"{prefix}_trocas.txt").read_text()
-            self.assertTrue(instructions.startswith("Comece com: Preto"))
+            self.assertIn("\nComece com: Preto\n", instructions)
             self.assertEqual(instructions.count("troque para"), 2)
 
     def test_swap_above_top_is_reported(self):

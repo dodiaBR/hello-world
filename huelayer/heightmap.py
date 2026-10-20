@@ -54,3 +54,13 @@ def layer_counts(lum: np.ndarray, settings: PrintSettings) -> np.ndarray:
 
 def heights_from_counts(counts: np.ndarray, settings: PrintSettings) -> np.ndarray:
     return settings.layer_top(counts - 1)
+
+
+def add_border(counts: np.ndarray, settings: PrintSettings, width_mm: float, height_mm: float) -> np.ndarray:
+    """Moldura de largura `width_mm` em volta da imagem, com altura fixa
+    (arredondada para camadas inteiras)."""
+    width = round(width_mm / settings.resolution_mm)
+    if width <= 0:
+        return counts
+    layers = max(1, round((height_mm - settings.first_layer) / settings.layer_height) + 1)
+    return np.pad(counts, width, constant_values=layers)

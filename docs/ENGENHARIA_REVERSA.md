@@ -91,9 +91,26 @@ a opacidade da etapa 2 (`simulate.render`). É por isso que a prévia mostra
 - **STL**: o mapa de alturas vira um sólido fechado (topo em relevo, paredes
   laterais e fundo), com normais para fora (`stl.py`). Os testes verificam que
   a malha é estanque.
-- **Roteiro de trocas**: em que número de camada e altura Z pausar e trocar o
-  filamento. No fatiador (PrusaSlicer, Bambu Studio, Orca) isso vira um
-  “color change”/pausa naquela camada.
+- **3MF com trocas embutidas** (`threemf.py`): além da malha, o arquivo leva
+  `Metadata/Prusa_Slicer_custom_gcode_per_print_z.xml`, onde cada troca é um
+  color change (`type="0"`, `M600`) na altura Z do topo da primeira camada do
+  novo filamento, com a cor dele. Também leva `Metadata/Slic3r_PE_model.config`
+  com a altura de camada **por objeto**, para o fatiador cortar exatamente nas
+  alturas usadas no cálculo, qualquer que seja o perfil escolhido. Esse
+  arquivo precisa declarar o `<volume>` cobrindo todos os triângulos; sem isso
+  o PrusaSlicer monta o objeto vazio (“No outline can be derived”).
+  Os nomes de arquivo e atributos foram conferidos nas strings do próprio
+  binário do PrusaSlicer 2.7.2, e o teste `test_prusaslicer_inserts_color_changes`
+  fatia o 3MF e confere no G-code que cada `;COLOR_CHANGE` cai na camada e na
+  cor certas.
+  A **primeira camada** é ajuste de impressão, não de objeto: o perfil do
+  fatiador precisa usar a mesma (`--first-layer`, padrão 0,16 mm).
+- **Roteiro de trocas** (`_trocas.txt`): o mesmo plano em texto, para
+  fatiadores em que o 3MF não traz as trocas: Bambu Studio e OrcaSlicer usam
+  outro arquivo de metadados, que ainda não foi validado; lá as trocas são
+  adicionadas à mão.
+- **Moldura** (`--border-mm`, `--border-height`): faixa de altura fixa em volta
+  da imagem.
 
 ## Cobertura em relação ao HueForge
 
@@ -103,8 +120,9 @@ a opacidade da etapa 2 (`simulate.render`). É por isso que a prévia mostra
 | Pintura manual de regiões / máscaras | não |
 | Biblioteca de filamentos com TDs | sim (`filamentos.json`, `--library`) |
 | Sugestão automática de filamentos a partir da imagem | sim (`--auto N`, `--optimize`) |
-| Borda/moldura e texto na peça | não |
-| Exportação 3MF com trocas embutidas | não (STL + texto) |
+| Borda/moldura | sim (`--border-mm`) |
+| Texto na peça | não |
+| Exportação 3MF com trocas embutidas | sim no PrusaSlicer (verificado); Bambu/Orca ainda não |
 | Interface gráfica com prévia em tempo real | não (CLI) |
 
 ## Valores de TD

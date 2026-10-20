@@ -27,7 +27,11 @@ Cada `-f` é `Nome:#RRGGBB:TD` (TD em mm) ou só o nome de um filamento da
 biblioteca (`huelayer/filamentos.json`). A ordem é automática, do mais escuro
 ao mais claro. Gera:
 
-- `saida/foto.stl` — o modelo para fatiar;
+- `saida/foto.3mf` — o modelo com as trocas de filamento já marcadas
+  (PrusaSlicer: abra e fatie; as trocas aparecem como color changes `M600`
+  com a altura de camada certa; use primeira camada de 0,16 mm ou a de
+  `--first-layer`);
+- `saida/foto.stl` — só a malha, para outros fatiadores;
 - `saida/foto_preview.png` — prévia simulada da cor impressa;
 - `saida/foto_trocas.txt` — em que camada trocar cada filamento.
 
@@ -46,7 +50,7 @@ O programa informa a diferença média de cor (ΔE em CIELAB) entre a prévia e 
 imagem: quanto menor, mais fiel.
 
 Opções úteis: `--gamma` (curva de altura: >1 dá mais camadas aos claros),
-`--layer-height`, `--first-layer`, `--base-height`, `--max-height`, `--resolution-mm`, `--invert` (litofania) e `--swap Z_MM`
+`--border-mm` (moldura), `--layer-height`, `--first-layer`, `--base-height`, `--max-height`, `--resolution-mm`, `--invert` (litofania) e `--swap Z_MM`
 (repetido, para escolher as alturas de troca manualmente).
 
 ## Testes
@@ -54,3 +58,6 @@ Opções úteis: `--gamma` (curva de altura: >1 dá mais camadas aos claros),
 ```sh
 python -m unittest
 ```
+
+Se o PrusaSlicer estiver instalado (`prusa-slicer` no PATH), um teste extra
+fatia o 3MF gerado e confere as trocas no G-code.
