@@ -35,6 +35,16 @@ def swap_instructions(stack: list[Swap], settings: PrintSettings, total_layers: 
         else:
             z = settings.layer_top(index)
             lines.append(f"Camada {index + 1} (Z={z:.2f} mm): troque para {filament.name}")
+    lines += [
+        "",
+        "Como aplicar:",
+        "- PrusaSlicer: abra o .3mf; as trocas já vêm marcadas.",
+        "- Bambu Studio / OrcaSlicer: abra o .3mf (ou .stl), ajuste a altura da primeira",
+        "  camada e das demais como acima, fatie e, na barra de camadas da prévia, vá a",
+        "  cada camada listada, clique no '+' com o botão direito e adicione uma pausa",
+        "  (ou troca de filamento). Esses fatiadores ignoram trocas vindas de 3MF de",
+        "  outros programas.",
+    ]
     return "\n".join(lines) + "\n"
 
 

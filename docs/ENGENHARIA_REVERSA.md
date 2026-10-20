@@ -105,10 +105,34 @@ a opacidade da etapa 2 (`simulate.render`). É por isso que a prévia mostra
   cor certas.
   A **primeira camada** é ajuste de impressão, não de objeto: o perfil do
   fatiador precisa usar a mesma (`--first-layer`, padrão 0,16 mm).
-- **Roteiro de trocas** (`_trocas.txt`): o mesmo plano em texto, para
-  fatiadores em que o 3MF não traz as trocas: Bambu Studio e OrcaSlicer usam
-  outro arquivo de metadados, que ainda não foi validado; lá as trocas são
-  adicionadas à mão.
+- **Roteiro de trocas** (`_trocas.txt`): o mesmo plano em texto, com o passo
+  a passo para fatiadores em que o 3MF não traz as trocas.
+
+### Por que o 3MF não traz as trocas no Bambu Studio e no OrcaSlicer
+
+Conclusão da leitura do código-fonte dos dois (`src/libslic3r/Format/bbs_3mf.cpp`,
+`src/libslic3r/Model.cpp` e `src/slic3r/GUI/Plater.cpp`):
+
+- As trocas ficam em `Metadata/custom_gcode_per_layer.xml`
+  (`<custom_gcodes_per_layer><plate><plate_info id="1"/><layer top_z=… type="0" …/>`).
+- A interface só copia as trocas lidas para o projeto quando também carrega a
+  configuração do arquivo (`load_config`); fora disso o bloco é ignorado.
+- **Bambu Studio:** `load_config` só fica ativo quando o metadado `Application`
+  começa com `BambuStudio-`. Senão o arquivo é tratado como “not from Bambu
+  Lab” e só a geometria é carregada.
+- **OrcaSlicer:** para um 3MF de terceiros (`From_Other`), `load_config` é
+  desligado quando o arquivo não traz `project_settings.config`. Se trouxesse,
+  essa configuração passaria a valer como perfil do projeto, substituindo a
+  impressora e os filamentos de quem abre.
+- O caminho de 3MF “do PrusaSlicer” dos dois (`From_Prusa`) tem a leitura de
+  `Prusa_Slicer_custom_gcode_per_print_z.xml` comentada.
+
+Fazer as trocas aparecerem sozinhas exigiria declarar o arquivo como gerado
+pelo Bambu Studio/Orca e embutir um perfil completo de impressão, o que é frágil
+e sobrescreve a configuração do usuário. Por isso, nesses fatiadores, as trocas
+são inseridas à mão na barra de camadas seguindo o `_trocas.txt` (que é também
+o que o HueForge oferece para eles). A numeração de camadas do roteiro é a
+mesma da barra: camada 1 = primeira camada.
 - **Moldura** (`--border-mm`, `--border-height`): faixa de altura fixa em volta
   da imagem.
 
@@ -122,7 +146,7 @@ a opacidade da etapa 2 (`simulate.render`). É por isso que a prévia mostra
 | Sugestão automática de filamentos a partir da imagem | sim (`--auto N`, `--optimize`) |
 | Borda/moldura | sim (`--border-mm`) |
 | Texto na peça | não |
-| Exportação 3MF com trocas embutidas | sim no PrusaSlicer (verificado); Bambu/Orca ainda não |
+| Exportação 3MF com trocas embutidas | sim no PrusaSlicer (verificado); Bambu/Orca não aceitam de terceiros (ver acima) |
 | Interface gráfica com prévia em tempo real | não (CLI) |
 
 ## Valores de TD

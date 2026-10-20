@@ -31,7 +31,10 @@ ao mais claro. Gera:
   (PrusaSlicer: abra e fatie; as trocas aparecem como color changes `M600`
   com a altura de camada certa; use primeira camada de 0,16 mm ou a de
   `--first-layer`);
-- `saida/foto.stl` — só a malha, para outros fatiadores;
+- `saida/foto.stl` — só a malha, para outros fatiadores. No Bambu Studio e no
+  OrcaSlicer as trocas são adicionadas à mão na barra de camadas (eles
+  ignoram trocas vindas de 3MF de outros programas; detalhes em
+  [docs/ENGENHARIA_REVERSA.md](docs/ENGENHARIA_REVERSA.md));
 - `saida/foto_preview.png` — prévia simulada da cor impressa;
 - `saida/foto_trocas.txt` — em que camada trocar cada filamento.
 
