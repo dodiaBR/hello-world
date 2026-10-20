@@ -24,7 +24,8 @@ python -m huelayer foto.jpg \
 ```
 
 Cada `-f` é `Nome:#RRGGBB:TD` (TD em mm) ou só o nome de um filamento da
-biblioteca (`huelayer/filamentos.json`). A ordem é automática, do mais escuro
+biblioteca (`huelayer/filamentos.json`: as 19 cores do PLA Basic da 3D Prime,
+com cores aproximadas a partir das fotos do site e TDs estimados). A ordem é automática, do mais escuro
 ao mais claro. Gera:
 
 - `saida/foto.3mf` — o modelo com as trocas de filamento já marcadas
@@ -37,6 +38,22 @@ ao mais claro. Gera:
   [docs/ENGENHARIA_REVERSA.md](docs/ENGENHARIA_REVERSA.md));
 - `saida/foto_preview.png` — prévia simulada da cor impressa;
 - `saida/foto_trocas.txt` — em que camada trocar cada filamento.
+
+### Bambu Lab A1 / A1 mini (Bambu Studio e OrcaSlicer)
+
+```sh
+python -m huelayer foto.jpg -f Preto --auto 4 --printer a1mini -o saida/foto
+```
+
+Com `--printer a1` ou `--printer a1mini`, o `.3mf` vira um projeto do Bambu
+Studio/OrcaSlicer: ao abrir, já vêm a impressora (`Bambu Lab A1 mini 0.4
+nozzle`), o processo (`0.08mm High Quality @BBL A1M`, com velocidades e
+larguras de linha oficiais), os filamentos com as cores certas e as trocas
+pelo AMS marcadas na barra de camadas. O relevo é calculado nas alturas desse
+perfil (primeira camada de 0,2 mm). Os perfis vêm da instalação de quem abre;
+o arquivo só os nomeia. Os filamentos usam o perfil `Generic PLA`; troque
+para o seu perfil de filamento se tiver um. Antes de imprimir, confira os
+volumes de purga em “Volumes de descarga” (o arquivo traz uma estimativa).
 
 ### Deixar o programa escolher
 

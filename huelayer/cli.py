@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+from .bambu import PRINTERS, Printer, write_bambu_3mf
 from .filament import DEFAULT_LIBRARY, Filament, Swap, auto_stack, load_library, luminance, resolve
 from .heightmap import PrintSettings, add_border, heights_from_counts, layer_counts, load_image
 from .optimize import PixelStats, choose_filaments, optimize_swaps, stack_error
@@ -24,7 +25,9 @@ def swap_layers(stack: list[Swap], settings: PrintSettings, total_layers: int) -
     return result
 
 
-def swap_instructions(stack: list[Swap], settings: PrintSettings, total_layers: int) -> str:
+def swap_instructions(
+    stack: list[Swap], settings: PrintSettings, total_layers: int, printer: Printer | None = None
+) -> str:
     # Slot do AMS = posição na pilha (1 = base), para o roteiro e o fatiador usarem a mesma numeração.
     lines = [
         f"Primeira camada: {settings.first_layer:g} mm; demais: {settings.layer_height:g} mm",
@@ -37,6 +40,14 @@ def swap_instructions(stack: list[Swap], settings: PrintSettings, total_layers: 
         else:
             z = settings.layer_top(index)
             lines.append(f"Camada {index + 1} (Z={z:.2f} mm): troque para {filament.name} (slot {slot})")
+    if printer:
+        lines += [
+            "",
+            f"Como aplicar: abra o .3mf no Bambu Studio ou no OrcaSlicer. Impressora ({printer.machine_profile}),",
+            f"processo ({printer.process_profile}), filamentos e trocas já vêm configurados;",
+            "na hora de imprimir, confira se cada slot do AMS tem o filamento indicado.",
+        ]
+        return "\n".join(lines) + "\n"
     lines += [
         "",
         "Como aplicar:",
@@ -72,9 +83,16 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
         help="alturas de troca manuais (uma a menos que o número de filamentos)",
     )
     parser.add_argument("-o", "--output", default="saida", help="prefixo dos arquivos gerados")
+    parser.add_argument(
+        "--printer", choices=sorted(PRINTERS),
+        help="gera um projeto Bambu Studio/OrcaSlicer pronto para a impressora (perfis oficiais, AMS)",
+    )
     defaults = PrintSettings()
-    for field in ("width_mm", "resolution_mm", "first_layer", "layer_height", "base_height", "max_height", "gamma"):
+    for field in ("width_mm", "resolution_mm", "base_height", "max_height", "gamma"):
         parser.add_argument(f"--{field.replace('_', '-')}", type=float, default=getattr(defaults, field))
+    # Sem valor explícito, as alturas de camada vêm do perfil da impressora (--printer) ou do padrão.
+    parser.add_argument("--first-layer", type=float)
+    parser.add_argument("--layer-height", type=float)
     parser.add_argument("--invert", action="store_true", help="claro = fino (backlit)")
     parser.add_argument("--border-mm", type=float, default=0.0, help="largura da moldura (0 = sem)")
     parser.add_argument("--border-height", type=float, help="altura da moldura (padrão: --max-height)")
@@ -102,11 +120,27 @@ def build_stack(args: argparse.Namespace, settings: PrintSettings, stats: PixelS
     return stack
 
 
+def layer_heights(args: argparse.Namespace, printer: Printer | None) -> tuple[float, float, dict[str, str]]:
+    """Alturas da primeira camada e das demais, e os ajustes que diferem do
+    perfil de processo da impressora (vão marcados como modificados)."""
+    base = printer or PrintSettings()
+    first = base.first_layer if args.first_layer is None else args.first_layer
+    height = base.layer_height if args.layer_height is None else args.layer_height
+    overrides = {}
+    if printer and first != printer.first_layer:
+        overrides["initial_layer_print_height"] = f"{first:g}"
+    if printer and height != printer.layer_height:
+        overrides["layer_height"] = f"{height:g}"
+    return first, height, overrides
+
+
 def main(argv: list[str] | None = None) -> None:
     args = parse_args(argv)
+    printer = PRINTERS[args.printer] if args.printer else None
+    first_layer, layer_height, process_overrides = layer_heights(args, printer)
     settings = PrintSettings(
-        width_mm=args.width_mm, resolution_mm=args.resolution_mm, first_layer=args.first_layer,
-        layer_height=args.layer_height, base_height=args.base_height, max_height=args.max_height,
+        width_mm=args.width_mm, resolution_mm=args.resolution_mm, first_layer=first_layer,
+        layer_height=layer_height, base_height=args.base_height, max_height=args.max_height,
         invert=args.invert, gamma=args.gamma,
     )
     image = load_image(args.image, settings)
@@ -126,14 +160,25 @@ def main(argv: list[str] | None = None) -> None:
     triangles = heightmap_triangles(heights_from_counts(counts, settings), settings.resolution_mm)
     total_layers = int(counts.max())
     changes = [
-        (float(settings.layer_top(index)), filament)
-        for index, filament in swap_layers(stack, settings, total_layers) if index is not None
+        (float(settings.layer_top(index)), slot, filament)
+        for slot, (index, filament) in enumerate(swap_layers(stack, settings, total_layers), 2) if index is not None
     ]
-    write_3mf(f"{output}.3mf", triangles, changes, settings.layer_height, name=output.name)
+    if printer:
+        if len(stack) > 4:
+            print(f"Aviso: {len(stack)} filamentos; o AMS Lite tem 4 slots, os demais exigem troca manual.")
+        try:
+            write_bambu_3mf(
+                f"{output}.3mf", triangles, [s.filament for s in stack], changes, printer,
+                name=output.name, process_overrides=process_overrides,
+            )
+        except ValueError as error:
+            raise SystemExit(str(error)) from error
+    else:
+        write_3mf(f"{output}.3mf", triangles, [(z, f) for z, _, f in changes], settings.layer_height, name=output.name)
     write_stl(f"{output}.stl", triangles)
     preview = (render(counts, stack, settings) * 255).round().astype(np.uint8)
     Image.fromarray(preview).save(f"{output}_preview.png")
-    instructions = swap_instructions(stack, settings, total_layers)
+    instructions = swap_instructions(stack, settings, total_layers, printer)
     Path(f"{output}_trocas.txt").write_text(instructions, encoding="utf-8")
 
     print(instructions, end="")

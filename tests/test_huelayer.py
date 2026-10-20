@@ -1,3 +1,4 @@
+import json
 import re
 import shutil
 import subprocess
@@ -11,6 +12,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+from huelayer.bambu import PRINTERS, write_bambu_3mf
 from huelayer.cli import main, swap_instructions
 from huelayer.filament import Filament, auto_stack, load_library, resolve
 from huelayer.heightmap import PrintSettings, add_border, heights_from_counts, layer_counts
@@ -192,6 +194,80 @@ class ThreeMfTest(unittest.TestCase):
             self.assertEqual(changes, [("0.88", "#FF0000"), ("1.28", "#FFFFFF")])
 
 
+class BambuProjectTest(unittest.TestCase):
+    heights = np.tile(np.linspace(0.48, 2.0, 12), (8, 1))
+    changes = [(0.68, 2, RED), (1.28, 3, WHITE)]
+
+    def write(self, directory: str, printer: str = "a1mini", **kwargs) -> zipfile.ZipFile:
+        path = Path(directory, "peca.3mf")
+        write_bambu_3mf(str(path), heightmap_triangles(self.heights, 1.0), [BLACK, RED, WHITE],
+                        self.changes, PRINTERS[printer], "peca", **kwargs)
+        return zipfile.ZipFile(path)
+
+    def test_declares_bambu_project_so_config_is_loaded(self):
+        with tempfile.TemporaryDirectory() as directory, self.write(directory) as archive:
+            root = ET.fromstring(archive.read("3D/3dmodel.model"))
+            namespace = "{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}"
+            metadata = {m.get("name"): m.text for m in root.iter(f"{namespace}metadata")}
+            self.assertTrue(metadata["Application"].startswith("BambuStudio-"))
+            # Com 3D/_rels/3dmodel.model.rels o arquivo não é confundido com um 3MF do PrusaSlicer.
+            relationships = ET.fromstring(archive.read("3D/_rels/3dmodel.model.rels"))
+            for relationship in relationships:
+                self.assertIn(relationship.get("Target").lstrip("/"), archive.namelist())
+
+    def test_project_settings_name_system_profiles(self):
+        with tempfile.TemporaryDirectory() as directory, self.write(directory) as archive:
+            config = json.loads(archive.read("Metadata/project_settings.config"))
+        self.assertEqual(config["printer_settings_id"], "Bambu Lab A1 mini 0.4 nozzle")
+        self.assertEqual(config["print_settings_id"], "0.08mm High Quality @BBL A1M")
+        self.assertEqual(config["filament_settings_id"], ["Generic PLA @BBL A1M"] * 3)
+        self.assertEqual(config["filament_colour"], ["#000000", "#FF0000", "#FFFFFF"])
+        # Uma entrada para o processo, uma por filamento e uma para a impressora.
+        self.assertEqual(config["different_settings_to_system"], [""] * 5)
+        self.assertEqual(len(config["inherits_group"]), 5)
+        self.assertEqual(len(config["flush_volumes_matrix"]), 9)
+        # Valores do JSON precisam ser strings ou listas de strings (ConfigBase::load_from_json).
+        for value in config.values():
+            self.assertTrue(isinstance(value, str) or all(isinstance(v, str) for v in value))
+
+    def test_process_overrides_are_marked_as_different(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.write(directory, process_overrides={"initial_layer_print_height": "0.16"}) as archive:
+                config = json.loads(archive.read("Metadata/project_settings.config"))
+        self.assertEqual(config["initial_layer_print_height"], "0.16")
+        self.assertEqual(config["different_settings_to_system"][0], "initial_layer_print_height")
+
+    def test_swaps_are_ams_tool_changes(self):
+        with tempfile.TemporaryDirectory() as directory, self.write(directory) as archive:
+            root = ET.fromstring(archive.read("Metadata/custom_gcode_per_layer.xml"))
+        self.assertEqual(root.tag, "custom_gcodes_per_layer")
+        plate = root.find("plate")
+        self.assertEqual(plate.find("plate_info").get("id"), "1")
+        self.assertEqual(
+            [(l.get("top_z"), l.get("type"), l.get("extruder"), l.get("color")) for l in plate.iter("layer")],
+            [("0.6800", "2", "2", "#FF0000"), ("1.2800", "2", "3", "#FFFFFF")],
+        )
+        self.assertEqual(plate.find("mode").get("value"), "MultiAsSingle")
+
+    def test_object_is_centered_on_the_bed(self):
+        with tempfile.TemporaryDirectory() as directory, self.write(directory, "a1") as archive:
+            mesh = ET.fromstring(archive.read("3D/Objects/object_1.model"))
+            settings = ET.fromstring(archive.read("Metadata/model_settings.config"))
+        namespace = "{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}"
+        points = np.array([[float(v.get(a)) for a in "xyz"] for v in mesh.iter(f"{namespace}vertex")])
+        np.testing.assert_allclose((points.min(0) + points.max(0))[:2] / 2, [0, 0], atol=1e-6)
+        self.assertEqual(points[:, 2].min(), 0)
+        transform = settings.find("assemble/assemble_item").get("transform")
+        self.assertTrue(transform.endswith(" 128 128 0"))
+
+    def test_rejects_part_larger_than_bed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = str(Path(directory, "grande.3mf"))
+            with self.assertRaises(ValueError):
+                write_bambu_3mf(path, heightmap_triangles(np.ones((3, 3)), 100.0), [BLACK], [],
+                                PRINTERS["a1mini"], "grande")
+
+
 class CliTest(unittest.TestCase):
     def test_end_to_end(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -233,6 +309,20 @@ class CliTest(unittest.TestCase):
             instructions = Path(f"{prefix}_trocas.txt").read_text()
             self.assertIn("\nComece com: Preto (slot 1)\n", instructions)
             self.assertEqual(instructions.count("troque para"), 2)
+
+    def test_printer_uses_profile_layer_heights(self):
+        with tempfile.TemporaryDirectory() as directory:
+            image = Path(directory, "cinza.png")
+            Image.fromarray(np.tile(np.linspace(0, 255, 40, dtype=np.uint8), (20, 1))).save(image)
+            for extra, first_layer, different in (([], "0.2", ""), (["--first-layer", "0.16"], "0.16", "initial_layer_print_height")):
+                prefix = Path(directory, "peca")
+                main([str(image), "-f", "Preto", "-f", "Branco", "--printer", "a1mini", "--width-mm", "20",
+                      "--resolution-mm", "0.5", "-o", str(prefix), *extra])
+                with zipfile.ZipFile(f"{prefix}.3mf") as archive:
+                    config = json.loads(archive.read("Metadata/project_settings.config"))
+                self.assertEqual(config["initial_layer_print_height"], first_layer)
+                self.assertEqual(config["different_settings_to_system"][0], different)
+                self.assertIn(f"Primeira camada: {first_layer} mm", Path(f"{prefix}_trocas.txt").read_text())
 
     def test_swap_above_top_is_reported(self):
         settings = PrintSettings()

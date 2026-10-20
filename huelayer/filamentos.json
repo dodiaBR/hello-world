@@ -1,13 +1,116 @@
 [
-  {"name": "Preto", "color": "#111111", "td": 0.6},
-  {"name": "Cinza Escuro", "color": "#4a4a4a", "td": 1.0},
-  {"name": "Marrom", "color": "#6b3e1f", "td": 1.2},
-  {"name": "Azul", "color": "#1f4fbf", "td": 1.2},
-  {"name": "Verde", "color": "#2e8b3a", "td": 1.5},
-  {"name": "Vermelho", "color": "#c62828", "td": 1.6},
-  {"name": "Laranja", "color": "#f07a1a", "td": 2.2},
-  {"name": "Cinza Claro", "color": "#b5b5b5", "td": 2.0},
-  {"name": "Pele", "color": "#e8b98f", "td": 3.0},
-  {"name": "Amarelo", "color": "#f2d21b", "td": 3.0},
-  {"name": "Branco", "color": "#ffffff", "td": 2.5}
+ {
+  "name": "Preto",
+  "color": "#1B1F20",
+  "td": 0.6,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Cinza Escuro",
+  "color": "#4A4C4E",
+  "td": 1.0,
+  "fonte": "cor estimada (foto indisponível); TD estimado, meça o seu"
+ },
+ {
+  "name": "Marrom",
+  "color": "#523C2C",
+  "td": 1.0,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Azul",
+  "color": "#160EA4",
+  "td": 1.0,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Azul Prime",
+  "color": "#0F2EC8",
+  "td": 1.2,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Roxo",
+  "color": "#9931B4",
+  "td": 1.2,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Verde",
+  "color": "#06AA46",
+  "td": 1.5,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Vermelho",
+  "color": "#E2111D",
+  "td": 1.6,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Rosa Magenta",
+  "color": "#E42E6C",
+  "td": 1.8,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Rosa",
+  "color": "#FB0B7F",
+  "td": 2.0,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Laranja",
+  "color": "#F5520D",
+  "td": 2.2,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Azul Tiffany",
+  "color": "#53BCAA",
+  "td": 2.5,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Cinza Claro",
+  "color": "#A2A49E",
+  "td": 2.0,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Areia",
+  "color": "#B09E84",
+  "td": 2.5,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Cor de Pele Caucasiano",
+  "color": "#E9B07A",
+  "td": 3.0,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Rosa Bebê",
+  "color": "#DEA3AB",
+  "td": 3.0,
+  "fonte": "cor amostrada da foto do site (aprox.); nome cortado no print; TD estimado, meça o seu"
+ },
+ {
+  "name": "Azul Bebê",
+  "color": "#9CC8E8",
+  "td": 3.0,
+  "fonte": "cor estimada (foto indisponível); TD estimado, meça o seu"
+ },
+ {
+  "name": "Amarelo",
+  "color": "#DEAF02",
+  "td": 3.0,
+  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+ },
+ {
+  "name": "Branco",
+  "color": "#FFFFFF",
+  "td": 2.5,
+  "fonte": "branco de referência; TD estimado, meça o seu"
+ }
 ]

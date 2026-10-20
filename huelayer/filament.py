@@ -30,8 +30,9 @@ class Filament:
 
 
 def load_library(path: str | Path = DEFAULT_LIBRARY) -> list[Filament]:
-    """Lê uma lista JSON de `{"name", "color", "td"}`. Os TDs da biblioteca
-    padrão são valores típicos, não medições: meça os seus filamentos."""
+    """Lê uma lista JSON de `{"name", "color", "td"}` (outros campos, como
+    `fonte`, são ignorados). A biblioteca padrão é o PLA Basic da 3D Prime:
+    cores aproximadas a partir das fotos do site e TDs estimados, não medidos."""
     entries = json.loads(Path(path).read_text(encoding="utf-8"))
     return [Filament(e["name"], hex_to_rgb(e["color"]), float(e["td"])) for e in entries]
 

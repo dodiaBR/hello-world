@@ -127,12 +127,44 @@ Conclusão da leitura do código-fonte dos dois (`src/libslic3r/Format/bbs_3mf.c
 - O caminho de 3MF “do PrusaSlicer” dos dois (`From_Prusa`) tem a leitura de
   `Prusa_Slicer_custom_gcode_per_print_z.xml` comentada.
 
-Fazer as trocas aparecerem sozinhas exigiria declarar o arquivo como gerado
-pelo Bambu Studio/Orca e embutir um perfil completo de impressão, o que é frágil
-e sobrescreve a configuração do usuário. Por isso, nesses fatiadores, as trocas
-são inseridas à mão na barra de camadas seguindo o `_trocas.txt` (que é também
-o que o HueForge oferece para eles). A numeração de camadas do roteiro é a
-mesma da barra: camada 1 = primeira camada.
+Por isso, sem `--printer`, as trocas são inseridas à mão na barra de camadas
+seguindo o `_trocas.txt` (a numeração é a mesma da barra: camada 1 = primeira
+camada).
+
+### Projeto nativo (`--printer a1` / `--printer a1mini`, `bambu.py`)
+
+Quando se quer que o projeto já abra configurado, o arquivo segue o formato
+de projeto do Bambu Studio, que o OrcaSlicer também lê:
+
+- `Application` = `BambuStudio-02.00.00.00`. É a condição para a configuração
+  ser carregada. 2.0.0 fica acima do limite das migrações de projetos antigos
+  (< 2.0.0) e abaixo de qualquer versão atual (sem aviso de “arquivo mais
+  novo”). No Orca, projetos até 2.3.2 sem a etiqueta do Orca mantêm a
+  configuração. A descrição do modelo registra que o arquivo foi gerado pelo
+  huelayer.
+- Malha em `3D/Objects/object_1.model`, referenciada por componente no
+  `3D/3dmodel.model`, com `3D/_rels/3dmodel.model.rels`. Esse arquivo também
+  impede que o 3MF seja tomado por um do PrusaSlicer
+  (`PrusaFileParser::check_3mf_from_prusa`).
+- `Metadata/model_settings.config`: objeto no filamento 1, placa 1, centrado na
+  mesa.
+- `Metadata/project_settings.config` (JSON de strings / listas de strings):
+  nomeia os perfis do sistema (`printer_settings_id`, `print_settings_id`,
+  `filament_settings_id`). Em `PresetCollection::load_external_preset`, todo
+  valor fora de `different_settings_to_system` é substituído pelo do perfil
+  instalado (`update_non_diff_values_to_base_config`), e o perfil é
+  selecionado sem marca de modificado. Assim o arquivo não copia os perfis da
+  Bambu e sempre usa a versão instalada. Ajustes intencionais (ex.:
+  `--first-layer 0.16`) são listados ali e aparecem como modificados.
+  `filament_colour` e a matriz de purga são configurações do projeto
+  (`s_project_options`) e não alteram os perfis.
+- `Metadata/custom_gcode_per_layer.xml`: cada troca é `ToolChange` (`type="2"`)
+  para o filamento N, no modo `MultiAsSingle` (um bico, vários filamentos: o
+  AMS troca sozinho), em `top_z` = topo da primeira camada do novo filamento.
+
+O que não foi possível verificar aqui: abrir o arquivo nas interfaces do
+Bambu Studio e do OrcaSlicer (não há binário deles neste ambiente). O formato
+foi derivado do código-fonte e os testes conferem cada regra acima.
 - **Moldura** (`--border-mm`, `--border-height`): faixa de altura fixa em volta
   da imagem.
 
@@ -146,10 +178,13 @@ mesma da barra: camada 1 = primeira camada.
 | Sugestão automática de filamentos a partir da imagem | sim (`--auto N`, `--optimize`) |
 | Borda/moldura | sim (`--border-mm`) |
 | Texto na peça | não |
-| Exportação 3MF com trocas embutidas | sim no PrusaSlicer (verificado); Bambu/Orca não aceitam de terceiros (ver acima) |
+| Exportação 3MF com trocas embutidas | PrusaSlicer (verificado fatiando); Bambu Studio/OrcaSlicer como projeto nativo com `--printer` |
 | Interface gráfica com prévia em tempo real | não (CLI) |
 
 ## Valores de TD
 
-Os TDs dos exemplos são valores típicos, **não medidas**. TD varia por marca,
+A biblioteca padrão traz as 19 cores do PLA Basic da 3D Prime. As cores foram
+amostradas das fotos dos carretéis no site (Cinza Escuro e Azul Bebê são
+estimadas). A 3D Prime não publica TD, então os TDs são **estimativas** por
+tipo de cor, **não medidas**. TD varia por marca,
 cor e até lote; para bons resultados meça os seus filamentos.
