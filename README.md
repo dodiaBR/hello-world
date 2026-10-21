@@ -25,16 +25,16 @@ python -m huelayer foto.jpg \
 
 Cada `-f` é `Nome:#RRGGBB:TD` (TD em mm) ou só o nome de um filamento da
 biblioteca (`huelayer/filamentos.json`: as 19 cores do PLA Basic da 3D Prime,
-com cores aproximadas a partir das fotos do site e TDs estimados). A ordem é automática, do mais escuro
-ao mais claro. Gera:
+com cores aproximadas a partir das fotos do site e TDs estimados). A ordem é
+automática, do mais escuro ao mais claro. Gera:
 
 - `saida/foto.3mf` — o modelo com as trocas de filamento já marcadas
   (PrusaSlicer: abra e fatie; as trocas aparecem como color changes `M600`
   com a altura de camada certa; use primeira camada de 0,16 mm ou a de
   `--first-layer`);
-- `saida/foto.stl` — só a malha, para outros fatiadores. No Bambu Studio e no
-  OrcaSlicer as trocas são adicionadas à mão na barra de camadas (eles
-  ignoram trocas vindas de 3MF de outros programas; detalhes em
+- `saida/foto.stl` — só a malha, para outros fatiadores. Para o Bambu Studio e
+  o OrcaSlicer use `--printer` (abaixo); sem ele, as trocas são adicionadas à
+  mão na barra de camadas (detalhes em
   [docs/ENGENHARIA_REVERSA.md](docs/ENGENHARIA_REVERSA.md));
 - `saida/foto_preview.png` — prévia simulada da cor impressa;
 - `saida/foto_trocas.txt` — em que camada trocar cada filamento.
@@ -70,7 +70,8 @@ O programa informa a diferença média de cor (ΔE em CIELAB) entre a prévia e 
 imagem: quanto menor, mais fiel.
 
 Opções úteis: `--gamma` (curva de altura: >1 dá mais camadas aos claros),
-`--border-mm` (moldura), `--layer-height`, `--first-layer`, `--base-height`, `--max-height`, `--resolution-mm`, `--invert` (litofania) e `--swap Z_MM`
+`--border-mm` (moldura), `--layer-height`, `--first-layer`, `--base-height`,
+`--max-height`, `--resolution-mm`, `--invert` (litofania) e `--swap Z_MM`
 (repetido, para escolher as alturas de troca manualmente).
 
 ## Testes

@@ -107,6 +107,8 @@ a opacidade da etapa 2 (`simulate.render`). É por isso que a prévia mostra
   fatiador precisa usar a mesma (`--first-layer`, padrão 0,16 mm).
 - **Roteiro de trocas** (`_trocas.txt`): o mesmo plano em texto, com o passo
   a passo para fatiadores em que o 3MF não traz as trocas.
+- **Moldura** (`--border-mm`, `--border-height`): faixa de altura fixa em volta
+  da imagem.
 
 ### Por que o 3MF não traz as trocas no Bambu Studio e no OrcaSlicer
 
@@ -165,8 +167,6 @@ de projeto do Bambu Studio, que o OrcaSlicer também lê:
 O que não foi possível verificar aqui: abrir o arquivo nas interfaces do
 Bambu Studio e do OrcaSlicer (não há binário deles neste ambiente). O formato
 foi derivado do código-fonte e os testes conferem cada regra acima.
-- **Moldura** (`--border-mm`, `--border-height`): faixa de altura fixa em volta
-  da imagem.
 
 ## Cobertura em relação ao HueForge
 
