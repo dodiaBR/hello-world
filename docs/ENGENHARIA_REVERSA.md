@@ -182,10 +182,15 @@ carregados.
 | Exportação 3MF com trocas embutidas | PrusaSlicer (verificado fatiando); Bambu Studio/OrcaSlicer como projeto nativo com `--printer` |
 | Interface gráfica com prévia em tempo real | não (CLI) |
 
-## Valores de TD
+## Bibliotecas e valores de TD
 
-A biblioteca padrão traz as 19 cores do PLA Basic da 3D Prime. As cores foram
-amostradas das fotos dos carretéis no site (Cinza Escuro e Azul Bebê são
-estimadas). A 3D Prime não publica TD, então os TDs são **estimativas** por
-tipo de cor, **não medidas**. TD varia por marca,
+- `filamentos.json` (padrão): as 30 cores sólidas do PLA Basic da Bambu Lab.
+  Nomes e cores vêm de `resources/profiles/BBL/filament/filaments_color_codes.json`
+  do Bambu Studio; cada cor leva o perfil `Bambu PLA Basic` (id `GFA00`), que o
+  projeto `--printer` seleciona. Os TDs são votos da comunidade em
+  [3dfilamentprofiles.com](https://3dfilamentprofiles.com/filaments/bambu-lab/pla/basic),
+  não valores da Bambu.
+- `filamentos_3dprime.json`: as 19 cores do PLA Basic da 3D Prime, com cores
+  amostradas das fotos dos carretéis no site (Cinza Escuro e Azul Bebê
+  estimadas) e TDs **estimados** por tipo de cor (a 3D Prime não publica TD). TD varia por marca,
 cor e até lote; para bons resultados meça os seus filamentos.

@@ -24,9 +24,12 @@ python -m huelayer foto.jpg \
 ```
 
 Cada `-f` é `Nome:#RRGGBB:TD` (TD em mm) ou só o nome de um filamento da
-biblioteca (`huelayer/filamentos.json`: as 19 cores do PLA Basic da 3D Prime,
-com cores aproximadas a partir das fotos do site e TDs estimados). A ordem é
-automática, do mais escuro ao mais claro. Gera:
+biblioteca, inteiro ou parcial (`-f Branco` encontra "Jade Branco"). A
+biblioteca padrão (`huelayer/filamentos.json`) tem as 30 cores sólidas do
+**PLA Basic da Bambu Lab**, com as cores oficiais do Bambu Studio e TDs da
+comunidade ([3dfilamentprofiles.com](https://3dfilamentprofiles.com/filaments/bambu-lab/pla/basic)).
+Para o PLA Basic da 3D Prime use `--library huelayer/filamentos_3dprime.json`.
+A ordem é automática, do mais escuro ao mais claro. Gera:
 
 - `saida/foto.3mf` — o modelo com as trocas de filamento já marcadas
   (PrusaSlicer: abra e fatie; as trocas aparecem como color changes `M600`
@@ -51,9 +54,13 @@ nozzle`), o processo (`0.08mm High Quality @BBL A1M`, com velocidades e
 larguras de linha oficiais), os filamentos com as cores certas e as trocas
 pelo AMS marcadas na barra de camadas. O relevo é calculado nas alturas desse
 perfil (primeira camada de 0,2 mm). Os perfis vêm da instalação de quem abre;
-o arquivo só os nomeia. Os filamentos usam o perfil `Generic PLA`; troque
-para o seu perfil de filamento se tiver um. Antes de imprimir, confira os
-volumes de purga em “Volumes de descarga” (o arquivo traz uma estimativa).
+o arquivo só os nomeia. Filamentos da biblioteca da Bambu usam o perfil
+oficial `Bambu PLA Basic`; os demais, `Generic PLA`. Antes de imprimir, confira
+os volumes de purga em “Volumes de descarga” (o arquivo traz uma estimativa).
+
+Vários PLA Basic da Bambu são bem translúcidos (TD alto, como amarelos e
+brancos), e numa peça de 2 mm eles não chegam a cobrir as cores de baixo. Para
+cores mais vivas use `--max-height 3`.
 
 ### Deixar o programa escolher
 

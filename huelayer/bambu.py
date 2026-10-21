@@ -41,23 +41,28 @@ class Printer:
     model: str
     machine_profile: str
     process_profile: str
-    filament_profile: str
-    filament_id: str
+    profile_suffix: str  # perfis de filamento são "<perfil> <sufixo>", ex.: "Bambu PLA Basic @BBL A1M"
     bed_mm: tuple[float, float]
     # Alturas do perfil de processo: o relevo é calculado nelas para o perfil
     # abrir sem modificação.
     first_layer: float = 0.2
     layer_height: float = 0.08
 
+    def filament_profile(self, filament: Filament) -> tuple[str, str]:
+        """Nome do perfil de filamento do sistema e o id dele."""
+        if filament.profile:
+            return f"{filament.profile} {self.profile_suffix}", filament.filament_id or ""
+        return f"Generic PLA {self.profile_suffix}", "GFL99"
+
 
 PRINTERS = {
     "a1mini": Printer(
         "Bambu Lab A1 mini", "Bambu Lab A1 mini 0.4 nozzle", "0.08mm High Quality @BBL A1M",
-        "Generic PLA @BBL A1M", "GFL99", (180, 180),
+        "@BBL A1M", (180, 180),
     ),
     "a1": Printer(
         "Bambu Lab A1", "Bambu Lab A1 0.4 nozzle", "0.08mm High Quality @BBL A1",
-        "Generic PLA @BBL A1", "GFL99", (256, 256),
+        "@BBL A1", (256, 256),
     ),
 }
 
@@ -97,6 +102,7 @@ def flush_volumes(filaments: list[Filament]) -> list[str]:
 
 def project_settings(printer: Printer, filaments: list[Filament], process_overrides: dict[str, str]) -> dict:
     count = len(filaments)
+    profiles = [printer.filament_profile(f) for f in filaments]
     return {
         "name": "project_settings",
         "from": "project",
@@ -106,8 +112,8 @@ def project_settings(printer: Printer, filaments: list[Filament], process_overri
         "nozzle_diameter": ["0.4"],
         "printer_settings_id": printer.machine_profile,
         "print_settings_id": printer.process_profile,
-        "filament_settings_id": [printer.filament_profile] * count,
-        "filament_ids": [printer.filament_id] * count,
+        "filament_settings_id": [name for name, _ in profiles],
+        "filament_ids": [filament_id for _, filament_id in profiles],
         "filament_type": ["PLA"] * count,
         "filament_colour": [rgb_to_hex(f.color) for f in filaments],
         "layer_height": f"{printer.layer_height:g}",

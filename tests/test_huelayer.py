@@ -44,10 +44,22 @@ class FilamentTest(unittest.TestCase):
 
     def test_resolve_by_name_or_spec(self):
         library = load_library()
-        self.assertEqual(resolve("branco", library).name, "Branco")
+        self.assertEqual(resolve("preto", library).name, "Preto")
+        self.assertEqual(resolve("branco", library).name, "Jade Branco")  # nome parcial
+        with self.assertRaisesRegex(ValueError, "ambíguo"):
+            resolve("Verde", library)
         self.assertEqual(resolve("X:#000000:1", library), Filament("X", (0, 0, 0), 1.0))
         with self.assertRaises(ValueError):
             resolve("Roxo Neon", library)
+
+
+    def test_libraries(self):
+        bambu = load_library()
+        self.assertEqual(len(bambu), 30)
+        self.assertTrue(all(f.profile == "Bambu PLA Basic" and f.filament_id == "GFA00" for f in bambu))
+        prime = load_library(Path(load_library.__defaults__[0]).with_name("filamentos_3dprime.json"))
+        self.assertEqual(len(prime), 19)
+        self.assertTrue(all(f.profile is None for f in prime))
 
 
 class HeightmapTest(unittest.TestCase):
@@ -120,10 +132,10 @@ class OptimizeTest(unittest.TestCase):
         library = load_library()
         by_name = {f.name: f for f in library}
         counts = np.tile(np.arange(1, 21), (3, 1))
-        truth = stack_from_layers([by_name["Preto"], by_name["Verde"], by_name["Amarelo"]], [6, 14], self.settings)
+        truth = stack_from_layers([by_name["Preto"], by_name["Verde-bambu"], by_name["Amarelo"]], [6, 14], self.settings)
         stats = PixelStats.from_image(counts, render(counts, truth, self.settings))
         stack, _ = choose_filaments(library, 3, stats, self.settings, required=[by_name["Preto"]])
-        self.assertEqual([s.filament.name for s in stack], ["Preto", "Verde", "Amarelo"])
+        self.assertEqual([s.filament.name for s in stack], ["Preto", "Verde-bambu", "Amarelo"])
 
     def test_rejects_more_filaments_than_layers(self):
         stats = PixelStats.from_image(np.array([[1, 2]]), np.zeros((1, 2, 3)))
@@ -229,6 +241,17 @@ class BambuProjectTest(unittest.TestCase):
         # Valores do JSON precisam ser strings ou listas de strings (ConfigBase::load_from_json).
         for value in config.values():
             self.assertTrue(isinstance(value, str) or all(isinstance(v, str) for v in value))
+
+    def test_bambu_filaments_use_their_official_profile(self):
+        bambu_black = Filament("Preto", (0, 0, 0), 0.6, "Bambu PLA Basic", "GFA00")
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory, "peca.3mf")
+            write_bambu_3mf(str(path), heightmap_triangles(self.heights, 1.0), [bambu_black, WHITE], [],
+                            PRINTERS["a1"], "peca")
+            with zipfile.ZipFile(path) as archive:
+                config = json.loads(archive.read("Metadata/project_settings.config"))
+        self.assertEqual(config["filament_settings_id"], ["Bambu PLA Basic @BBL A1", "Generic PLA @BBL A1"])
+        self.assertEqual(config["filament_ids"], ["GFA00", "GFL99"])
 
     def test_process_overrides_are_marked_as_different(self):
         with tempfile.TemporaryDirectory() as directory:

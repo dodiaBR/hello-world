@@ -1,116 +1,272 @@
 [
  {
-  "name": "Preto",
-  "color": "#1B1F20",
-  "td": 0.6,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Cinza Escuro",
-  "color": "#4A4C4E",
-  "td": 1.0,
-  "fonte": "cor estimada (foto indisponível); TD estimado, meça o seu"
- },
- {
-  "name": "Marrom",
-  "color": "#523C2C",
-  "td": 1.0,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Azul",
-  "color": "#160EA4",
-  "td": 1.0,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Azul Prime",
-  "color": "#0F2EC8",
-  "td": 1.2,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Roxo",
-  "color": "#9931B4",
-  "td": 1.2,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Verde",
-  "color": "#06AA46",
-  "td": 1.5,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Vermelho",
-  "color": "#E2111D",
-  "td": 1.6,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Rosa Magenta",
-  "color": "#E42E6C",
-  "td": 1.8,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Rosa",
-  "color": "#FB0B7F",
-  "td": 2.0,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Laranja",
-  "color": "#F5520D",
-  "td": 2.2,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Azul Tiffany",
-  "color": "#53BCAA",
-  "td": 2.5,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Cinza Claro",
-  "color": "#A2A49E",
-  "td": 2.0,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Areia",
-  "color": "#B09E84",
-  "td": 2.5,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Cor de Pele Caucasiano",
-  "color": "#E9B07A",
-  "td": 3.0,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
- },
- {
-  "name": "Rosa Bebê",
-  "color": "#DEA3AB",
-  "td": 3.0,
-  "fonte": "cor amostrada da foto do site (aprox.); nome cortado no print; TD estimado, meça o seu"
- },
- {
-  "name": "Azul Bebê",
-  "color": "#9CC8E8",
-  "td": 3.0,
-  "fonte": "cor estimada (foto indisponível); TD estimado, meça o seu"
+  "name": "Abóbora Laranja",
+  "color": "#FF9016",
+  "td": 5.5,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10301",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
  },
  {
   "name": "Amarelo",
-  "color": "#DEAF02",
-  "td": 3.0,
-  "fonte": "cor amostrada da foto do site (aprox.); TD estimado, meça o seu"
+  "color": "#F4EE2A",
+  "td": 6,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10400",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
  },
  {
-  "name": "Branco",
+  "name": "Azul",
+  "color": "#0A2989",
+  "td": 2.2,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10601",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Azul-Cinza",
+  "color": "#5B6579",
+  "td": 3,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10602",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Azul-cobalto",
+  "color": "#0056B8",
+  "td": 5,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10604",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Bege",
+  "color": "#F7E6DE",
+  "td": 8,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10201",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Bronze",
+  "color": "#847D48",
+  "td": 0.5,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10801",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Cacau Marrom",
+  "color": "#6F5034",
+  "td": 0.3,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10802",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Ciano",
+  "color": "#0086D6",
+  "td": 8,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10603",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Cinza",
+  "color": "#8E9089",
+  "td": 2,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10103",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Cinza-claro",
+  "color": "#D1D3D5",
+  "td": 2.8,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10104",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Cinza-escuro",
+  "color": "#545454",
+  "td": 1.4,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10105",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Dourado",
+  "color": "#E4BD68",
+  "td": 3.5,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10401",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Girassol Amarelo",
+  "color": "#FEC600",
+  "td": 4.8,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10402",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Indigo Purple",
+  "color": "#482960",
+  "td": 2,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10701",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Jade Branco",
   "color": "#FFFFFF",
-  "td": 2.5,
-  "fonte": "branco de referência; TD estimado, meça o seu"
+  "td": 5,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10100",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Laranja",
+  "color": "#FF6A13",
+  "td": 5.6,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10300",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Magenta",
+  "color": "#EC008C",
+  "td": 4.58,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10202",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Maroon Red",
+  "color": "#9D2235",
+  "td": 3,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10205",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Marrom",
+  "color": "#9D432C",
+  "td": 2,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10800",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Mistletoe Green",
+  "color": "#3F8E43",
+  "td": 5,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10502",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Prateado",
+  "color": "#A6A9AA",
+  "td": 0.5,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10102",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Preto",
+  "color": "#000000",
+  "td": 0.6,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10101",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Rosa",
+  "color": "#F55A74",
+  "td": 8,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10203",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Rosa-choque",
+  "color": "#F5547C",
+  "td": 3.7,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10204",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Roxo",
+  "color": "#5E43B7",
+  "td": 5,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10700",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Turquesa",
+  "color": "#00B1B7",
+  "td": 1.6,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10605",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Verde Brilhante",
+  "color": "#BECF00",
+  "td": 4,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10503",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Verde-bambu",
+  "color": "#00AE42",
+  "td": 2,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10501",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
+ },
+ {
+  "name": "Vermelho",
+  "color": "#C12E1F",
+  "td": 4,
+  "profile": "Bambu PLA Basic",
+  "filament_id": "GFA00",
+  "code": "10200",
+  "fonte": "cor oficial (Bambu Studio); TD da comunidade (3dfilamentprofiles.com), não oficial"
  }
 ]
