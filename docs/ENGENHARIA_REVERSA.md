@@ -164,9 +164,10 @@ de projeto do Bambu Studio, que o OrcaSlicer também lê:
   para o filamento N, no modo `MultiAsSingle` (um bico, vários filamentos: o
   AMS troca sozinho), em `top_z` = topo da primeira camada do novo filamento.
 
-O que não foi possível verificar aqui: abrir o arquivo nas interfaces do
-Bambu Studio e do OrcaSlicer (não há binário deles neste ambiente). O formato
-foi derivado do código-fonte e os testes conferem cada regra acima.
+O formato foi derivado do código-fonte e os testes conferem cada regra acima.
+Verificado na prática: os projetos para A1 e A1 mini abriram no Bambu Studio e
+no OrcaSlicer com impressora, processo, cores dos filamentos e trocas
+carregados.
 
 ## Cobertura em relação ao HueForge
 
